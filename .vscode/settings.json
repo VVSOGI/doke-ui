@@ -1,0 +1,4 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "draw.folder.structure.exclude": ["node_modules", "**/*/node_modules", ".git", ".next", "**/*.bin"]
+}
