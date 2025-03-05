@@ -1,5 +1,8 @@
 import { Metadata } from "next";
 import { IconDescriptor } from "next/dist/lib/metadata/types/metadata-types";
+import { EndpointsDataProvider } from "@/contexts";
+import { Sidebar } from "@/components";
+import { loadApiSchema, loadProjectData } from "@/lib/utils";
 import "./globals.css";
 
 export interface CustomIconDescriptorType extends IconDescriptor {
@@ -18,14 +21,27 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const projects = await loadProjectData();
+  const data = [];
+  for (const route of projects.routes) {
+    data.push(await loadApiSchema(route));
+  }
+
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <div className="flex">
+          <EndpointsDataProvider endpointData={data}>
+            <Sidebar />
+          </EndpointsDataProvider>
+          <main className="flex-1">{children}</main>
+        </div>
+      </body>
     </html>
   );
 }
