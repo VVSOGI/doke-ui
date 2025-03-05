@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 import { colors, layout, typography } from "./design";
+import { PluginAPI } from "tailwindcss/types/config";
 
 export default {
   content: ["./components/**/*.{js,ts,jsx,tsx,mdx}", "./app/**/*.{js,ts,jsx,tsx,mdx}"],
@@ -18,5 +19,10 @@ export default {
       maxHeight: layout.height,
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addVariant }: PluginAPI) {
+      addVariant("child", "& > *");
+      addVariant("child-hover", "& > *:hover");
+    },
+  ],
 } satisfies Config;
