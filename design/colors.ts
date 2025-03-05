@@ -9,6 +9,7 @@ export const colors: ThemeConfig["colors"] = {
     300: "#d3d6da",
     400: "#878a8c",
     500: "#787c7e",
+    600: "#5e6061",
   },
 
   red: {
