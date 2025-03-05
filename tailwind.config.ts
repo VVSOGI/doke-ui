@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss";
-import { colors, layout, typography } from "./design";
 import { PluginAPI } from "tailwindcss/types/config";
+import { colors, layout, typography } from "./lib/design";
 
 export default {
   content: ["./components/**/*.{js,ts,jsx,tsx,mdx}", "./app/**/*.{js,ts,jsx,tsx,mdx}"],

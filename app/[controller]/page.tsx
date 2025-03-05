@@ -1,4 +1,4 @@
-import { loadApiSchema } from "@/utils/loadApiSchema";
+import { loadApiSchema } from "@/lib/utils";
 
 export default async function Page({ params }: { params: Promise<{ controller: string }> }) {
   const { controller } = await params;
