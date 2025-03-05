@@ -1,13 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import { EndpointList } from "@/components";
 import { D2CodingBold, D2CodingLight } from "@/lib/assets";
-import { Controller } from "@/lib/types";
 
-interface Props {
-  list: Controller[];
-}
-
-export async function Sidebar({ list }: Props) {
+export function Sidebar() {
   return (
     <div className="w-[275px] h-screen p-6 border-r border-gray-300 bg-white overflow-hidden">
       <Link
@@ -23,7 +20,7 @@ export async function Sidebar({ list }: Props) {
       </Link>
       <div className="w-full h-[calc(100%-2.25rem)] flex flex-col gap-4 py-8 px-4">
         <div className={`text-1 text-gray-600 ${D2CodingLight.className}`}>ENDPOINTS</div>
-        <EndpointList list={list} />
+        <EndpointList />
       </div>
     </div>
   );
