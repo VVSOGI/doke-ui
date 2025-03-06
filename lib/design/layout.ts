@@ -1,6 +1,6 @@
 import { KeyValuePair, ResolvableTo } from "tailwindcss/types/config";
 
-type LayoutKeys = "width" | "height" | "spacing";
+type LayoutKeys = "width" | "height" | "spacing" | "flex";
 
 export const layout: Record<LayoutKeys, ResolvableTo<KeyValuePair<string, string>> | undefined> = {
   width: {},
@@ -23,5 +23,13 @@ export const layout: Record<LayoutKeys, ResolvableTo<KeyValuePair<string, string
     14: "5rem", //        80px
     15: "6.25rem", //     100px
     16: "7.5rem", //      120px
+    17: "9.375rem", //    150px
+    18: "12.5rem", //     200px
+    19: "17.5rem", //     280px
+  },
+  flex: {
+    1: "1",
+    2: "2",
+    3: "3",
   },
 };

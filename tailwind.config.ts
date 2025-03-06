@@ -7,6 +7,7 @@ export default {
   theme: {
     colors,
     spacing: layout.spacing,
+    flex: layout.flex,
     fontSize: typography.fontSize,
     fontWeight: typography.fontWeight,
 
