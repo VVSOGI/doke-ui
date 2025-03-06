@@ -1,1 +1,2 @@
-export * from "./SidebarButton";
+export * from "./ControllerButton";
+export * from "./EndpointButton";
