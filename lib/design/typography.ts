@@ -9,9 +9,9 @@ interface Typography {
 export const typography: Typography = {
   fontSize: {
     0: ["0.65rem", { lineHeight: "1rem" }],
-    1: ["0.85rem", { lineHeight: "1rem" }],
-    2: ["1rem", { lineHeight: "1.25rem" }],
-    3: ["1.25rem", { lineHeight: "1.5rem" }],
+    1: ["0.85rem", { lineHeight: "1.25rem" }],
+    2: ["1rem", { lineHeight: "1.5rem" }],
+    3: ["1.25rem", { lineHeight: "1.75rem" }],
     4: ["1.5rem", { lineHeight: "2rem" }],
     5: ["2rem", { lineHeight: "2.5rem" }],
     6: ["2.5rem", { lineHeight: "3rem" }],

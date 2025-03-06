@@ -8,15 +8,13 @@ interface Props extends AnchorHTMLAttributes<HTMLAnchorElement> {
 }
 
 export function EndpointButton({ href, active, children, ...props }: Props) {
-  const activeStyles = active //
-    ? "mx-6 py-2 px-8 rounded-md text-1 text-blue-100"
-    : "mx-6 py-2 px-8 rounded-md text-1";
+  const activeStyles = active ? "text-blue-100" : "text-black";
 
   return (
     <Link
       href={href}
       className={`
-        flex font-400
+        flex mx-4 py-2 px-4 rounded-md text-1 font-400 
         hover:bg-gray-100
         active:bg-gray-200
         ${activeStyles}
