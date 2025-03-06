@@ -1,31 +1,52 @@
 "use client";
 
-import { Icon } from "@/components";
-import { SidebarButton } from "@/components/button";
-import { useEndpointData } from "@/contexts";
-import { ICONS_LIST } from "@/lib/constants";
 import { useState } from "react";
+import { useEndpointData } from "@/contexts";
+import { Icon, EndpointButton, ControllerButton } from "@/components";
+import { ICONS_LIST } from "@/lib/constants";
 
 export function EndpointList() {
   const { endpointData } = useEndpointData();
+  const [activeController, setActiveController] = useState([...endpointData.map((_, index) => index)]);
   const [currentIndex, setCurrentIndex] = useState("0-0");
+
+  const onClickController = (index: number) => {
+    setActiveController((prev) => {
+      if (prev.includes(index)) {
+        return prev.filter((endpointIndex) => endpointIndex !== index);
+      } else {
+        return [...activeController, index];
+      }
+    });
+  };
+
+  const onClickEndpoint = (controllerIndex: number, endpointIndex: number) => {
+    setCurrentIndex(`${controllerIndex}-${endpointIndex}`);
+  };
 
   return (
     <div className="flex flex-col gap-4">
       {endpointData.map((data, index) => {
         return (
           <div key={data.controllerName} className="flex flex-col gap-2">
-            <div className="flex justify-between py-4 px-6 text-1">
-              <div>{data.basePath}</div>
-              <Icon icons={ICONS_LIST.ARROW_DROP_DOWN} />
-            </div>
-            <div className="flex flex-col gap-4">
-              {data.endpoints.map((endpoint, endpointIndex) => (
-                <SidebarButton active={`${index}-${endpointIndex}` === currentIndex} key={endpoint.name}>
-                  {endpoint.name}
-                </SidebarButton>
-              ))}
-            </div>
+            <ControllerButton onClick={() => onClickController(index)}>
+              <div>{data.basePath.toUpperCase()}</div>
+              <Icon icons={activeController.includes(index) ? ICONS_LIST.ARROW_DROP_DOWN : ICONS_LIST.ARROW_DROP_UP} />
+            </ControllerButton>
+            {activeController.includes(index) && (
+              <div className="flex flex-col gap-4">
+                {data.endpoints.map((endpoint, endpointIndex) => (
+                  <EndpointButton
+                    key={endpoint.name}
+                    href={data.basePath + "#" + endpoint.name}
+                    active={`${index}-${endpointIndex}` === currentIndex}
+                    onClick={() => onClickEndpoint(index, endpointIndex)}
+                  >
+                    {endpoint.name}
+                  </EndpointButton>
+                ))}
+              </div>
+            )}
           </div>
         );
       })}

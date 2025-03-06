@@ -10,7 +10,7 @@ export function Sidebar() {
       <Link
         href={"/"}
         className={`
-          w-fit flex gap-1 items-center py-4 text-2
+          w-fit flex gap-1 items-center py-4 px-4 text-2
           hover:text-gray-500 child:hover:text-blue-200
           active:text-black
           ${D2CodingBold.className}
