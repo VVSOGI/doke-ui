@@ -1,6 +1,5 @@
 import { AnchorHTMLAttributes } from "react";
 import Link from "next/link";
-import { NotoSans } from "@/lib/assets";
 
 interface Props extends AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string;

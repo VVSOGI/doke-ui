@@ -43,7 +43,7 @@ export function EndpointList() {
                     active={`${index}-${endpointIndex}` === currentIndex}
                     onClick={() => onClickEndpoint(index, endpointIndex)}
                   >
-                    {camelToPascalCase(endpoint.name)}
+                    {camelToPascalCase(endpoint.name)} ({endpoint.method})
                   </EndpointButton>
                 ))}
               </div>
