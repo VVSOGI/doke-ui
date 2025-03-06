@@ -1,5 +1,6 @@
-import Link from "next/link";
 import { AnchorHTMLAttributes } from "react";
+import Link from "next/link";
+import { NotoSans } from "@/lib/assets";
 
 interface Props extends AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string;
@@ -16,7 +17,9 @@ export function EndpointButton({ href, active, children, ...props }: Props) {
     <Link
       href={href}
       className={`
-        flex
+        flex font-400
+        hover:bg-gray-100
+        active:bg-gray-200
         ${activeStyles}
       `}
       {...props}

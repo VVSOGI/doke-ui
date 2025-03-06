@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useEndpointData } from "@/contexts";
 import { Icon, EndpointButton, ControllerButton } from "@/components";
 import { ICONS_LIST } from "@/lib/constants";
+import { camelToPascalCase } from "@/lib/utils";
 
 export function EndpointList() {
   const { endpointData } = useEndpointData();
@@ -28,13 +29,13 @@ export function EndpointList() {
     <div className="flex flex-col gap-4">
       {endpointData.map((data, index) => {
         return (
-          <div key={data.controllerName} className="flex flex-col gap-2">
+          <div key={data.controllerName} className="flex flex-col gap-4">
             <ControllerButton onClick={() => onClickController(index)}>
               <div>{data.basePath.toUpperCase()}</div>
               <Icon icons={activeController.includes(index) ? ICONS_LIST.ARROW_DROP_DOWN : ICONS_LIST.ARROW_DROP_UP} />
             </ControllerButton>
             {activeController.includes(index) && (
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4 mb-4">
                 {data.endpoints.map((endpoint, endpointIndex) => (
                   <EndpointButton
                     key={endpoint.name}
@@ -42,7 +43,7 @@ export function EndpointList() {
                     active={`${index}-${endpointIndex}` === currentIndex}
                     onClick={() => onClickEndpoint(index, endpointIndex)}
                   >
-                    {endpoint.name}
+                    {camelToPascalCase(endpoint.name)}
                   </EndpointButton>
                 ))}
               </div>
