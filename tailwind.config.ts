@@ -8,6 +8,7 @@ export default {
     colors,
     spacing: layout.spacing,
     fontSize: typography.fontSize,
+    fontWeight: typography.fontWeight,
 
     extend: {
       width: layout.width,
