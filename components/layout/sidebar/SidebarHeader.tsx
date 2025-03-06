@@ -7,7 +7,7 @@ export function SidebarHeader() {
     <Link
       href={"/"}
       className={`
-          w-fit flex gap-1 items-center py-4 px-4 text-3
+          w-fit flex gap-1 items-center py-4 px-7 text-3
           hover:text-gray-500 child:hover:text-blue-200
           active:text-black
           ${NotoSans.className}
