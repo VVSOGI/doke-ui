@@ -35,12 +35,12 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
-        <section className="fixed">
+        <div className="flex">
           <EndpointsDataProvider endpointData={data}>
             <Sidebar />
           </EndpointsDataProvider>
-        </section>
-        <main className="absolute left-19 flex-1">{children}</main>
+          <main className="flex-1">{children}</main>
+        </div>
       </body>
     </html>
   );

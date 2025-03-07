@@ -18,16 +18,15 @@ export interface Endpoint {
 export interface DefaultProperty {
   type: "string" | "boolean" | "number";
   description: string;
+  required: boolean;
 }
 
 export interface Body {
   properties: Record<string, DefaultProperty>;
-  required: string[];
 }
 
 export interface Params {
   properties: Record<string, DefaultProperty>;
-  required?: string[];
 }
 
 export interface Query {
