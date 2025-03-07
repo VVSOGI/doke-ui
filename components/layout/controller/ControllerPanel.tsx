@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { camelToPascalCase } from "@/lib/utils";
 import { NotoSans } from "@/lib/assets";
 import { Controller } from "@/lib/types";
 import { BodyProperties } from ".";
@@ -23,7 +22,7 @@ export function ControllerPanel({ data }: Props) {
               ${NotoSans.className}
             `}
           >
-            {camelToPascalCase(endpoint.name)}
+            {endpoint.name}
           </div>
           <div className={`text-2 mb-12 text-gray-700`}>{endpoint.description}</div>
           <div className="flex flex-col gap-8">
