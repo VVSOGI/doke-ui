@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useEndpointData } from "@/contexts";
 import { Icon, EndpointButton, ControllerButton } from "@/components";
 import { ICONS_LIST } from "@/lib/constants";
-import { camelToPascalCase } from "@/lib/utils";
 
 export function EndpointList() {
   const { endpointData } = useEndpointData();
@@ -43,7 +42,7 @@ export function EndpointList() {
                     active={`${index}-${endpointIndex}` === currentIndex}
                     onClick={() => onClickEndpoint(index, endpointIndex)}
                   >
-                    {camelToPascalCase(endpoint.name)} ({endpoint.method})
+                    {endpoint.name}
                   </EndpointButton>
                 ))}
               </div>
