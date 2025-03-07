@@ -1,4 +1,5 @@
 import React from "react";
+import { PropertyTitle } from "@/components";
 import { NotoSans } from "@/lib/assets";
 import { Body } from "@/lib/types";
 
@@ -9,14 +10,7 @@ interface Props {
 export function BodyProperties({ bodyRequest }: Props) {
   return (
     <div>
-      <div
-        className={`
-          w-full border-b border-gray-200 pb-5 text-3 font-300 text-gray-500
-          ${NotoSans.className}
-        `}
-      >
-        BODY PROPERTIES
-      </div>
+      <PropertyTitle>BODY PROPERTIES</PropertyTitle>
       {bodyRequest &&
         Object.entries(bodyRequest.properties).map(([key, value]) => (
           <div key={key} className="flex p-8 border-b">
