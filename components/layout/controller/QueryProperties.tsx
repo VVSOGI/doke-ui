@@ -1,4 +1,5 @@
 import React from "react";
+import { PropertyTitle } from "@/components";
 import { NotoSans } from "@/lib/assets";
 import { Query } from "@/lib/types";
 
@@ -9,14 +10,7 @@ interface Props {
 export function QueryProperties({ queryRequest }: Props) {
   return (
     <div>
-      <div
-        className={`
-          w-full border-b border-gray-200 pb-5 text-3 font-300 text-gray-500
-          ${NotoSans.className}
-        `}
-      >
-        QUERY PROPERTIES
-      </div>
+      <PropertyTitle>QUERY PROPERTIES</PropertyTitle>
       {queryRequest &&
         Object.entries(queryRequest.properties).map(([key, value]) => (
           <div key={key} className="flex p-8 border-b">

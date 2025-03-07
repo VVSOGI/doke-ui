@@ -14,9 +14,9 @@ interface Props {
 
 export function ControllerPanel({ data }: Props) {
   return (
-    <div className="w-full h-screen px-12 pt-13 overflow-y-scroll custom-scrollbar">
+    <div className="w-full h-screen px-12 pb-13 overflow-y-scroll custom-scrollbar">
       {data.endpoints.map((endpoint) => (
-        <div key={endpoint.name} className="mb-13">
+        <div id={endpoint.name} key={endpoint.name} className="py-13">
           <div
             className={`
               text-5 font-300 mb-10
