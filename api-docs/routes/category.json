@@ -16,12 +16,10 @@
           "properties": {
             "title": {
               "type": "string",
-              "description": "카테고리 제목"
+              "description": "카테고리 제목",
+              "required": true
             }
-          },
-          "required": [
-            "title"
-          ]
+          }
         }
       },
       "response": {
@@ -66,7 +64,8 @@
           "properties": {
             "deleted": {
               "type": "boolean",
-              "description": "Get all category Based on the query."
+              "description": "Get all category Based on the query.",
+              "required": false
             }
           }
         }
@@ -129,7 +128,8 @@
           "properties": {
             "categoryId": {
               "type": "string",
-              "description": "Target category Id that you find"
+              "description": "Target category Id that you find",
+              "required": true
             }
           }
         }
@@ -176,12 +176,10 @@
           "properties": {
             "categoryId": {
               "type": "string",
-              "description": "Target category id that you want update"
+              "description": "Target category id that you want update",
+              "required": true
             }
-          },
-          "required": [
-            "categoryId"
-          ]
+          }
         }
       },
       "response": {
@@ -226,12 +224,10 @@
           "properties": {
             "categoryId": {
               "type": "string",
-              "description": "Target category id that you want delete"
+              "description": "Target category id that you want delete",
+              "required": true
             }
-          },
-          "required": [
-            "categoryId"
-          ]
+          }
         }
       },
       "response": {

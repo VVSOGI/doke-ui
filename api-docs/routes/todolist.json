@@ -16,16 +16,15 @@
           "properties": {
             "title": {
               "type": "string",
-              "description": "Write title of todolist create you want"
+              "description": "Write title of todolist create you want",
+              "required": true
             },
             "categoryId": {
               "type": "string",
-              "description": "The location category ID for which you want to create a todolist"
+              "description": "The location category ID for which you want to create a todolist",
+              "required": true
             }
-          },
-          "required": [
-            "title"
-          ]
+          }
         }
       },
       "response": {
@@ -148,7 +147,8 @@
           "properties": {
             "checked": {
               "type": "boolean",
-              "description": "A status value that distinguishes completed from incomplete todolist"
+              "description": "A status value that distinguishes completed from incomplete todolist",
+              "required": false
             }
           }
         },
@@ -156,7 +156,8 @@
           "properties": {
             "categoryId": {
               "type": "string",
-              "description": "The location category's id for which you find todolist's"
+              "description": "The location category's id for which you find todolist's",
+              "required": true
             }
           }
         }
@@ -233,7 +234,8 @@
           "properties": {
             "checked": {
               "type": "boolean",
-              "description": "A status value that distinguishes completed from incomplete todolist"
+              "description": "A status value that distinguishes completed from incomplete todolist",
+              "required": false
             }
           }
         },
@@ -241,7 +243,8 @@
           "properties": {
             "categoryId": {
               "type": "string",
-              "description": "The location category's id for which you find todolist's"
+              "description": "The location category's id for which you find todolist's",
+              "required": true
             }
           }
         }
@@ -311,20 +314,20 @@
           "properties": {
             "id": {
               "type": "string",
-              "description": "Target todolist id that you want update"
+              "description": "Target todolist id that you want update",
+              "required": true
             },
             "title": {
               "type": "string",
-              "description": "The title of the todolist you want to update"
+              "description": "The title of the todolist you want to update",
+              "required": false
             },
             "checked": {
               "type": "boolean",
-              "description": "Update the completion status of the todolist you want to update property"
+              "description": "Update the completion status of the todolist you want to update property",
+              "required": false
             }
-          },
-          "required": [
-            "categoryId"
-          ]
+          }
         }
       },
       "response": {
@@ -379,16 +382,15 @@
           "properties": {
             "id": {
               "type": "string",
-              "description": "Target todolist id that you want update"
+              "description": "Target todolist id that you want update",
+              "required": true
             },
             "order": {
               "type": "number",
-              "description": "The order number of the todolist you want to update"
+              "description": "The order number of the todolist you want to update",
+              "required": true
             }
-          },
-          "required": [
-            "categoryId"
-          ]
+          }
         }
       },
       "response": {}
