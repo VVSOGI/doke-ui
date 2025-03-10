@@ -4,13 +4,14 @@ import { NotoSans } from "@/lib/assets";
 import { DefaultProperty } from "@/lib/types";
 
 interface Props {
+  title: string;
   properties: Record<string, DefaultProperty> | undefined;
 }
 
-export function Properties({ properties }: Props) {
+export function Properties({ title, properties }: Props) {
   return (
     <div>
-      <PropertyTitle properties={properties}>BODY PROPERTIES</PropertyTitle>
+      <PropertyTitle properties={properties}>{title}</PropertyTitle>
       {properties &&
         Object.entries(properties).map(([key, value]) => (
           <div key={key} className="flex p-8 border-b">
