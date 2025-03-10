@@ -10,7 +10,7 @@ interface Props {
 export function QueryProperties({ queryRequest }: Props) {
   return (
     <div>
-      <PropertyTitle>QUERY PROPERTIES</PropertyTitle>
+      <PropertyTitle properties={queryRequest?.properties}>QUERY PROPERTIES</PropertyTitle>
       {queryRequest &&
         Object.entries(queryRequest.properties).map(([key, value]) => (
           <div key={key} className="flex p-8 border-b">

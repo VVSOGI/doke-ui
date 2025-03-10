@@ -10,7 +10,7 @@ interface Props {
 export function ParamsProperties({ paramsRequest }: Props) {
   return (
     <div>
-      <PropertyTitle>PARAMS PROPERTIES</PropertyTitle>
+      <PropertyTitle properties={paramsRequest?.properties}>PARAMS PROPERTIES</PropertyTitle>
       {paramsRequest &&
         Object.entries(paramsRequest.properties).map(([key, value]) => (
           <div key={key} className="flex p-8 border-b">

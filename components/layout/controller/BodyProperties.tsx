@@ -10,7 +10,7 @@ interface Props {
 export function BodyProperties({ bodyRequest }: Props) {
   return (
     <div>
-      <PropertyTitle>BODY PROPERTIES</PropertyTitle>
+      <PropertyTitle properties={bodyRequest?.properties}>BODY PROPERTIES</PropertyTitle>
       {bodyRequest &&
         Object.entries(bodyRequest.properties).map(([key, value]) => (
           <div key={key} className="flex p-8 border-b">
