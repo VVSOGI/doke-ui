@@ -28,36 +28,6 @@
         }
       },
       "response": {
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Created category ID"
-          },
-          "categoryId": {
-            "type": "string",
-            "description": "The location category ID for which you want to create a todolist"
-          },
-          "title": {
-            "type": "string",
-            "description": "Created todolist title"
-          },
-          "checked": {
-            "type": "boolean",
-            "description": "Check todolist completion status"
-          },
-          "createdAt": {
-            "type": "string",
-            "description": "Created todolist createdAt"
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "Created todolist updatedAt"
-          },
-          "order": {
-            "type": "number",
-            "description": "The order of the generated todolists"
-          }
-        },
         "example": {
           "id": "ea2a1198-9b29-4258-9021-409b81f57caf",
           "categoryId": "f144cc78-34d9-4d0a-9e95-48cf7102dce3",
@@ -76,36 +46,6 @@
       "description": "This endpoint retrieves all todolist items across all categories in the system.\n  It returns a comprehensive array of todolist objects containing complete details for each item.\n  Each todolist object includes its unique identifier, associated category, title, completion status, order position, and timestamp information.\n  This endpoint is useful for global views, dashboard displays, or administrative interfaces that need to show all todolist items regardless of category.",
       "request": {},
       "response": {
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Created category ID"
-          },
-          "categoryId": {
-            "type": "string",
-            "description": "The location category ID"
-          },
-          "title": {
-            "type": "string",
-            "description": "Created todolist title"
-          },
-          "checked": {
-            "type": "boolean",
-            "description": "Check todolist completion status"
-          },
-          "createdAt": {
-            "type": "string",
-            "description": "Created todolist createdAt"
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "Created todolist updatedAt"
-          },
-          "order": {
-            "type": "number",
-            "description": "The order of the generated todolists"
-          }
-        },
         "example": [
           {
             "id": "ea2a1198-9b29-4258-9021-409b81f57caf",
@@ -163,36 +103,6 @@
         }
       },
       "response": {
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Created category ID"
-          },
-          "categoryId": {
-            "type": "string",
-            "description": "The location category ID for which you want to create a todolist"
-          },
-          "title": {
-            "type": "string",
-            "description": "Created todolist title"
-          },
-          "checked": {
-            "type": "boolean",
-            "description": "Check todolist completion status"
-          },
-          "createdAt": {
-            "type": "string",
-            "description": "Created todolist createdAt"
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "Created todolist updatedAt"
-          },
-          "order": {
-            "type": "number",
-            "description": "The order of the generated todolists"
-          }
-        },
         "example": [
           {
             "id": "ea2a1198-9b29-4258-9021-409b81f57caf",
@@ -250,16 +160,6 @@
         }
       },
       "response": {
-        "properties": {
-          "data": {
-            "type": "array",
-            "description": "Contains a list of todolist that were modified or completed on a specific date."
-          },
-          "total": {
-            "type": "number",
-            "description": "The number of data that fits the date."
-          }
-        },
         "example": {
           "data": [
             {
@@ -331,36 +231,6 @@
         }
       },
       "response": {
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "target category ID where placed todolist"
-          },
-          "categoryId": {
-            "type": "string",
-            "description": "The location category ID for which you want to create a todolist"
-          },
-          "title": {
-            "type": "string",
-            "description": "Created todolist title"
-          },
-          "checked": {
-            "type": "boolean",
-            "description": "Check todolist completion status"
-          },
-          "createdAt": {
-            "type": "string",
-            "description": "Created todolist createdAt"
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "Created todolist updatedAt"
-          },
-          "order": {
-            "type": "number",
-            "description": "The order of the generated todolists"
-          }
-        },
         "example": {
           "id": "d55232cb-c8df-465e-8ea7-ce11e884dc2e",
           "categoryId": "f144cc78-34d9-4d0a-9e95-48cf7102dce3",

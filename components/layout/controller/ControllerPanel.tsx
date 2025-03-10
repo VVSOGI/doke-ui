@@ -39,13 +39,13 @@ export function ControllerPanel({ data }: Props) {
           </div>
           <div className="mb-12 pr-13 text-2 text-gray-700">{endpoint.description}</div>
           <div className="flex flex-col gap-8">
-            <Properties properties={endpoint.request.body?.properties} />
-            <Properties properties={endpoint.request.params?.properties} />
-            <Properties properties={endpoint.request.query?.properties} />
+            <Properties title="BODY PROPERTIES" properties={endpoint.request.body?.properties} />
+            <Properties title="PARAMS PROPERTIES" properties={endpoint.request.params?.properties} />
+            <Properties title="QUERY PROPERTIES" properties={endpoint.request.query?.properties} />
             <div>
               <PropertyTitle properties={{}}>RESPONSE</PropertyTitle>
               <div className="pt-8 px-7">
-                <ReactJson src={endpoint.response.example} collapsed={2} displayDataTypes={false} />
+                <ReactJson src={endpoint.response.example} collapsed={1} displayDataTypes={false} />
               </div>
             </div>
           </div>
