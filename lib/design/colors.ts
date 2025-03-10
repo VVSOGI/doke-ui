@@ -4,7 +4,7 @@ export const colors: ThemeConfig["colors"] = {
   white: "#ffffff",
   black: "#000000",
   gray: {
-    100: "#edeff1",
+    100: "#f4f4f4",
     200: "#e3e3e1",
     300: "#d3d6da",
     400: "#878a8c",
