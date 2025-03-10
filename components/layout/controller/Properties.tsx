@@ -1,18 +1,18 @@
 import React from "react";
 import { PropertyTitle } from "@/components";
 import { NotoSans } from "@/lib/assets";
-import { Params } from "@/lib/types";
+import { DefaultProperty } from "@/lib/types";
 
 interface Props {
-  paramsRequest: Params | undefined;
+  properties: Record<string, DefaultProperty> | undefined;
 }
 
-export function ParamsProperties({ paramsRequest }: Props) {
+export function Properties({ properties }: Props) {
   return (
     <div>
-      <PropertyTitle properties={paramsRequest?.properties}>PARAMS PROPERTIES</PropertyTitle>
-      {paramsRequest &&
-        Object.entries(paramsRequest.properties).map(([key, value]) => (
+      <PropertyTitle properties={properties}>BODY PROPERTIES</PropertyTitle>
+      {properties &&
+        Object.entries(properties).map(([key, value]) => (
           <div key={key} className="flex p-8 border-b">
             <div className="flex-1 flex flex-col gap-1">
               <div className="text-2">{key}</div>
