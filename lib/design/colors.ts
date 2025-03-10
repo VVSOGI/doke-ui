@@ -36,4 +36,10 @@ export const colors: ThemeConfig["colors"] = {
     200: "#c9b458",
     300: "#b59f3b",
   },
+
+  mint: {
+    100: "#cfffe5",
+    200: "#a1e6c0",
+    300: "#68b389",
+  },
 };

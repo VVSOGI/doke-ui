@@ -3,9 +3,7 @@
 import React from "react";
 import { NotoSans } from "@/lib/assets";
 import { Controller } from "@/lib/types";
-import { BodyProperties } from ".";
-import { ParamsProperties } from "./ParamsProperties";
-import { QueryProperties } from "./QueryProperties";
+import { BodyProperties, ParamsProperties, QueryProperties } from ".";
 
 interface Props {
   data: Controller;
@@ -18,13 +16,24 @@ export function ControllerPanel({ data }: Props) {
         <div id={endpoint.name} key={endpoint.name} className="py-13">
           <div
             className={`
-              text-5 font-300 mb-10
+              flex gap-8 mb-10 text-5 font-300
               ${NotoSans.className}
             `}
           >
-            {endpoint.name}
+            <div
+              className={`px-4 text-white rounded-md
+                ${endpoint.method === "POST" && "bg-green-300"}
+                ${endpoint.method === "GET" && "bg-blue-200"}
+                ${endpoint.method === "PATCH" && "bg-mint-300"}
+                ${endpoint.method === "PUT" && "bg-mint-300"}
+                ${endpoint.method === "DELETE" && "bg-red-200"}
+              `}
+            >
+              {endpoint.method}/
+            </div>
+            <div>{endpoint.name}</div>
           </div>
-          <div className={`text-2 mb-12 text-gray-700`}>{endpoint.description}</div>
+          <div className="mb-12 pr-13 text-2 text-gray-700">{endpoint.description}</div>
           <div className="flex flex-col gap-8">
             <BodyProperties bodyRequest={endpoint.request.body} />
             <ParamsProperties paramsRequest={endpoint.request.params} />
