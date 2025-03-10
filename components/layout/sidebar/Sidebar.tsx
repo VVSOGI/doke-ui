@@ -1,7 +1,6 @@
 "use client";
 
-import { EndpointList, SidebarHeader } from "@/components";
-import { Divider } from "./Divider";
+import { Divider, EndpointList, SidebarHeader } from "@/components";
 
 export function Sidebar() {
   return (
