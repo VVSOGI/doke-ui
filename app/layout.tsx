@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { IconDescriptor } from "next/dist/lib/metadata/types/metadata-types";
-import { EndpointsDataProvider } from "@/contexts";
+import { ActiveSectionProvider, EndpointsDataProvider } from "@/contexts";
 import { Sidebar } from "@/components";
 import { loadApiSchema, loadProjectData } from "@/lib/utils/load";
 import "./globals.css";
@@ -36,10 +36,12 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <div className="flex">
-          <EndpointsDataProvider endpointData={data}>
-            <Sidebar />
-          </EndpointsDataProvider>
-          <main className="flex-1">{children}</main>
+          <ActiveSectionProvider>
+            <EndpointsDataProvider endpointData={data}>
+              <Sidebar />
+            </EndpointsDataProvider>
+            <main className="flex-1">{children}</main>
+          </ActiveSectionProvider>
         </div>
       </body>
     </html>

@@ -1,6 +1,7 @@
 "use client";
-import { Controller } from "@/lib/types";
+
 import { createContext, useContext, ReactNode } from "react";
+import { Controller } from "@/lib/types";
 
 interface EndpointsDataContextType {
   endpointData: Controller[];

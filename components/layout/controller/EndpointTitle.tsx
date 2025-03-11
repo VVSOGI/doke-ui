@@ -1,15 +1,22 @@
-import React from "react";
+"use client";
+
+import React, { useRef } from "react";
 import { NotoSans } from "@/lib/assets";
 import { Endpoint } from "@/lib/types";
 import { ApiExecuteButton } from "@/components";
+import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 
 interface Props {
   endpoint: Endpoint;
 }
 
 export function EndpointTitle({ endpoint }: Props) {
+  const ref = useRef<HTMLDivElement>(null);
+  useIntersectionObserver(endpoint.name, ref);
+
   return (
     <div
+      ref={ref}
       className={`
         flex gap-8 mb-10 text-5 font-300
         ${NotoSans.className}
