@@ -9,9 +9,10 @@ import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 interface Props {
   endpoint: Endpoint;
   isScrolling: boolean;
+  setSelected: (selected: Endpoint) => void;
 }
 
-function Component({ endpoint, isScrolling }: Props) {
+function Component({ endpoint, isScrolling, setSelected }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   useIntersectionObserver(endpoint.name, isScrolling, ref);
 
@@ -37,7 +38,7 @@ function Component({ endpoint, isScrolling }: Props) {
       </div>
       <div className="w-full flex justify-between items-center pr-10">
         <div>{endpoint.name}</div>
-        <ApiExecuteButton />
+        <ApiExecuteButton onClick={() => setSelected(endpoint)} />
       </div>
     </div>
   );
