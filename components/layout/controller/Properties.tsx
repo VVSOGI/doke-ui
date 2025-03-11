@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { PropertyTitle } from "@/components";
 import { NotoSans } from "@/lib/assets";
 import { DefaultProperty } from "@/lib/types";
@@ -8,7 +8,7 @@ interface Props {
   properties: Record<string, DefaultProperty> | undefined;
 }
 
-export function Properties({ title, properties }: Props) {
+function Component({ title, properties }: Props) {
   return (
     <div>
       <PropertyTitle properties={properties}>{title}</PropertyTitle>
@@ -29,3 +29,5 @@ export function Properties({ title, properties }: Props) {
     </div>
   );
 }
+
+export const Properties = memo(Component);
