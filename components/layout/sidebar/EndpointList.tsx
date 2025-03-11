@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { useEndpointData } from "@/contexts";
+import { useActiveSection, useEndpointData } from "@/contexts";
 import { Icon, EndpointButton, ControllerButton } from "@/components";
 import { ICONS_LIST } from "@/lib/constants";
 
 export function EndpointList() {
   const { endpointData } = useEndpointData();
+  const { activeSection, changeSection } = useActiveSection();
   const [activeController, setActiveController] = useState([...endpointData.map((_, index) => index)]);
-  const [currentIndex, setCurrentIndex] = useState("0-0");
 
   const onClickController = (index: number) => {
     setActiveController((prev) => {
@@ -18,10 +18,6 @@ export function EndpointList() {
         return [...activeController, index];
       }
     });
-  };
-
-  const onClickEndpoint = (controllerIndex: number, endpointIndex: number) => {
-    setCurrentIndex(`${controllerIndex}-${endpointIndex}`);
   };
 
   return (
@@ -35,12 +31,12 @@ export function EndpointList() {
             </ControllerButton>
             {activeController.includes(index) && (
               <div className="flex flex-col gap-4 mb-4">
-                {data.endpoints.map((endpoint, endpointIndex) => (
+                {data.endpoints.map((endpoint) => (
                   <EndpointButton
                     key={endpoint.name}
                     href={data.basePath + "#" + endpoint.name}
-                    active={`${index}-${endpointIndex}` === currentIndex}
-                    onClick={() => onClickEndpoint(index, endpointIndex)}
+                    active={endpoint.name === activeSection}
+                    onClick={() => changeSection(endpoint.name)}
                   >
                     {endpoint.name}
                   </EndpointButton>
