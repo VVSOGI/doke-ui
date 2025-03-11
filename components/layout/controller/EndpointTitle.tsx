@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { memo, useRef } from "react";
 import { NotoSans } from "@/lib/assets";
 import { Endpoint } from "@/lib/types";
 import { ApiExecuteButton } from "@/components";
@@ -8,11 +8,12 @@ import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 
 interface Props {
   endpoint: Endpoint;
+  isScrolling: boolean;
 }
 
-export function EndpointTitle({ endpoint }: Props) {
+function Component({ endpoint, isScrolling }: Props) {
   const ref = useRef<HTMLDivElement>(null);
-  useIntersectionObserver(endpoint.name, ref);
+  useIntersectionObserver(endpoint.name, isScrolling, ref);
 
   return (
     <div
@@ -41,3 +42,5 @@ export function EndpointTitle({ endpoint }: Props) {
     </div>
   );
 }
+
+export const EndpointTitle = memo(Component);

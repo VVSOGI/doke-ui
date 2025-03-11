@@ -1,7 +1,11 @@
 import { useEffect } from "react";
 import { useActiveSection } from "@/contexts";
 
-export function useIntersectionObserver(sectionId: string, ref: React.RefObject<HTMLElement | null>) {
+export function useIntersectionObserver(
+  sectionId: string,
+  isScrolling: boolean,
+  ref: React.RefObject<HTMLElement | null>
+) {
   const { updateHash } = useActiveSection();
   const options = {
     rootMargin: "0px 0px -500px 0px",
@@ -9,6 +13,7 @@ export function useIntersectionObserver(sectionId: string, ref: React.RefObject<
   };
 
   useEffect(() => {
+    if (!isScrolling) return;
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -27,5 +32,5 @@ export function useIntersectionObserver(sectionId: string, ref: React.RefObject<
         observer.unobserve(currentRef);
       }
     };
-  }, [ref, sectionId, updateHash, options]);
+  }, [isScrolling, ref, sectionId, updateHash, options]);
 }
