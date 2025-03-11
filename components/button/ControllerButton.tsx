@@ -1,11 +1,14 @@
-import { ButtonHTMLAttributes } from "react";
+import React, { ButtonHTMLAttributes } from "react";
+import { Icon } from "@/components";
 import { NotoSans } from "@/lib/assets";
+import { ICONS_LIST } from "@/lib/constants";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
+  isOpen: boolean;
   children: React.ReactNode;
 }
 
-export function ControllerButton({ children, ...props }: Props) {
+export function ControllerButton({ isOpen, children, ...props }: Props) {
   return (
     <button
       className={`
@@ -16,7 +19,8 @@ export function ControllerButton({ children, ...props }: Props) {
       `}
       {...props}
     >
-      {children}
+      <div>{children}</div>
+      <Icon icons={isOpen ? ICONS_LIST.ARROW_DROP_DOWN : ICONS_LIST.ARROW_DROP_UP} />
     </button>
   );
 }

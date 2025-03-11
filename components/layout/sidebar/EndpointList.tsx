@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { useActiveSection, useEndpointData } from "@/contexts";
-import { Icon, EndpointButton, ControllerButton } from "@/components";
-import { ICONS_LIST } from "@/lib/constants";
+import { EndpointButton, ControllerButton } from "@/components";
 
 export function EndpointList() {
   const { endpointData } = useEndpointData();
@@ -25,9 +24,8 @@ export function EndpointList() {
       {endpointData.map((data, index) => {
         return (
           <div key={data.controllerName} className="flex flex-col gap-4">
-            <ControllerButton onClick={() => onClickController(index)}>
-              <div>{data.basePath.toUpperCase()}</div>
-              <Icon icons={activeController.includes(index) ? ICONS_LIST.ARROW_DROP_DOWN : ICONS_LIST.ARROW_DROP_UP} />
+            <ControllerButton isOpen={activeController.includes(index)} onClick={() => onClickController(index)}>
+              {data.basePath.toUpperCase()}
             </ControllerButton>
             {activeController.includes(index) && (
               <div className="flex flex-col gap-4 mb-4">
