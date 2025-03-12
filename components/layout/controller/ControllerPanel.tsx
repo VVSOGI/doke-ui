@@ -16,8 +16,8 @@ export function ControllerPanel({ data }: Props) {
   const { isScrolling } = useScroll({ containerRef });
 
   return (
-    <div ref={containerRef} className="relative h-screen flex mb-13 overflow-y-scroll custom-scrollbar">
-      <div className="flex-3">
+    <div className="relative h-screen flex">
+      <div ref={containerRef} className="flex-3 overflow-y-scroll custom-scrollbar">
         {data.endpoints.map((endpoint) => (
           <div key={endpoint.name} id={endpoint.name} className="px-12 py-13">
             <EndpointTitle endpoint={endpoint} isScrolling={isScrolling} setSelected={setSelected} />

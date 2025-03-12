@@ -13,12 +13,12 @@ export function ExecutePanel({ selected, setSelected }: Props) {
   return (
     <div
       className={`
-        sticky top-0 h-screen bg-gray-800
+        sticky top-0 h-screen bg-gray-700 
         ${styles}
       `}
     >
       {selected && (
-        <div className="w-full text-end p-4">
+        <div className="w-full text-end p-7">
           <Icon
             className={`
             text-gray-100 cursor-pointer select-none
