@@ -9,7 +9,7 @@ import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 interface Props {
   endpoint: Endpoint;
   isScrolling: boolean;
-  setSelected: (selected: Endpoint) => void;
+  setSelected: React.Dispatch<React.SetStateAction<Endpoint | null>>;
 }
 
 function Component({ endpoint, isScrolling, setSelected }: Props) {
@@ -38,7 +38,17 @@ function Component({ endpoint, isScrolling, setSelected }: Props) {
       </div>
       <div className="w-full flex justify-between items-center pr-10">
         <div>{endpoint.name}</div>
-        <ApiExecuteButton onClick={() => setSelected(endpoint)} />
+        <ApiExecuteButton
+          onClick={() =>
+            setSelected((prev) => {
+              if (prev) {
+                return null;
+              } else {
+                return endpoint;
+              }
+            })
+          }
+        />
       </div>
     </div>
   );
