@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import { useScroll } from "@/hooks";
-import { EndpointTitle, Properties, ResponseJSON } from ".";
+import { EndpointTitle, Properties, ResponseExample } from ".";
 import { ExecutePanel } from "@/components";
 import { Controller, Endpoint } from "@/lib/types";
 
@@ -17,7 +17,7 @@ export function ControllerPanel({ data }: Props) {
 
   return (
     <div className="relative h-screen flex">
-      <div ref={containerRef} className="flex-3 overflow-y-scroll custom-scrollbar">
+      <div ref={containerRef} className="flex-1 overflow-y-scroll custom-scrollbar">
         {data.endpoints.map((endpoint) => (
           <div key={endpoint.name} id={endpoint.name} className="px-12 py-13">
             <EndpointTitle endpoint={endpoint} isScrolling={isScrolling} setSelected={setSelected} />
@@ -26,12 +26,12 @@ export function ControllerPanel({ data }: Props) {
               <Properties title="BODY PROPERTIES" properties={endpoint.request.body?.properties} />
               <Properties title="PARAMS PROPERTIES" properties={endpoint.request.params?.properties} />
               <Properties title="QUERY PROPERTIES" properties={endpoint.request.query?.properties} />
-              <ResponseJSON endpoint={endpoint} />
+              <ResponseExample endpoint={endpoint} />
             </div>
           </div>
         ))}
       </div>
-      <ExecutePanel selected={selected} setSelected={setSelected} />
+      <ExecutePanel controllerData={data} selected={selected} setSelected={setSelected} />
     </div>
   );
 }

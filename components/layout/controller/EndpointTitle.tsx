@@ -1,6 +1,7 @@
 "use client";
 
 import React, { memo, useRef } from "react";
+import { isEqual } from "es-toolkit";
 import { NotoSans } from "@/lib/assets";
 import { Endpoint } from "@/lib/types";
 import { ApiExecuteButton } from "@/components";
@@ -41,11 +42,10 @@ function Component({ endpoint, isScrolling, setSelected }: Props) {
         <ApiExecuteButton
           onClick={() =>
             setSelected((prev) => {
-              if (prev) {
+              if (prev && isEqual(endpoint, prev)) {
                 return null;
-              } else {
-                return endpoint;
               }
+              return endpoint;
             })
           }
         />
