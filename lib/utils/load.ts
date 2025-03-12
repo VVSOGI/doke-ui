@@ -1,6 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
-import { Controller, project } from "@/lib/types";
+import { Controller, Project } from "@/lib/types";
 
 export async function loadApiSchema(name: string) {
   const jsonPath = path.join(process.cwd(), "api-docs", "routes", `${name}.json`);
@@ -13,7 +13,7 @@ export async function loadApiSchema(name: string) {
 export async function loadProjectData() {
   const jsonPath = path.join(process.cwd(), "api-docs", "projects.json");
   const response = await fs.readFile(jsonPath, "utf-8");
-  const data: project = JSON.parse(response);
+  const data: Project = JSON.parse(response);
 
   return data;
 }
