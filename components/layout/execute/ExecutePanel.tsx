@@ -1,19 +1,27 @@
 "use client";
 
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { Icon, JsonView } from "@/components";
 import { NotoSans } from "@/lib/assets";
 import { ICONS_LIST } from "@/lib/constants";
-import { Controller, Endpoint } from "@/lib/types";
+import { Controller, Endpoint, Project } from "@/lib/types";
+import { generateCurlCommand } from "@/lib/utils/generateCurlCommand";
 
 interface Props {
+  projectData: Project;
   controllerData: Controller;
   selected: Endpoint | null;
   setSelected: (selected: Endpoint | null) => void;
 }
 
-function Component({ controllerData, selected, setSelected }: Props) {
+function Component({ projectData, controllerData, selected, setSelected }: Props) {
   const styles = selected ? "flex-1" : "flex-0";
+  useEffect(() => {
+    if (!selected) return;
+
+    generateCurlCommand(projectData, controllerData, selected);
+  }, [selected]);
+
   return (
     <div
       className={`
@@ -41,8 +49,12 @@ function Component({ controllerData, selected, setSelected }: Props) {
               <span>{selected.method}</span>
               <span>/{controllerData.basePath + selected.path}</span>
             </div>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 mt-4">
               <div className={`text-white text-2 font-300`}>Example Request</div>
+              <div className="w-full h-fit p-8 bg-gray-800 rounded-sm text-white text-1 font-300 whitespace-pre-wrap"></div>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className={`text-white text-2 font-300`}>Example Response</div>
               <div className="w-full h-fit p-8 bg-gray-800 rounded-sm">
                 <JsonView
                   src={selected.response.example}
