@@ -4,13 +4,14 @@ import React, { useRef, useState } from "react";
 import { useScroll } from "@/hooks";
 import { EndpointTitle, Properties, ResponseExample } from ".";
 import { ExecutePanel } from "@/components";
-import { Controller, Endpoint } from "@/lib/types";
+import { Controller, Endpoint, Project } from "@/lib/types";
 
 interface Props {
-  data: Controller;
+  projectData: Project;
+  controllerData: Controller;
 }
 
-export function ControllerPanel({ data }: Props) {
+export function ControllerPanel({ projectData, controllerData }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [selected, setSelected] = useState<Endpoint | null>(null);
   const { isScrolling } = useScroll({ containerRef });
@@ -18,7 +19,7 @@ export function ControllerPanel({ data }: Props) {
   return (
     <div className="relative h-screen flex">
       <div ref={containerRef} className="flex-1 overflow-y-scroll custom-scrollbar">
-        {data.endpoints.map((endpoint) => (
+        {controllerData.endpoints.map((endpoint) => (
           <div key={endpoint.name} id={endpoint.name} className="px-12 py-13">
             <EndpointTitle endpoint={endpoint} isScrolling={isScrolling} setSelected={setSelected} />
             <div className="mb-12 pr-13 text-2 text-gray-700">{endpoint.description}</div>
@@ -31,7 +32,12 @@ export function ControllerPanel({ data }: Props) {
           </div>
         ))}
       </div>
-      <ExecutePanel controllerData={data} selected={selected} setSelected={setSelected} />
+      <ExecutePanel
+        projectData={projectData}
+        controllerData={controllerData}
+        selected={selected}
+        setSelected={setSelected}
+      />
     </div>
   );
 }

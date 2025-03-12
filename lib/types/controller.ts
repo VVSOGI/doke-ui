@@ -11,8 +11,8 @@ export interface Endpoint {
   method: string;
   name: string;
   description: string;
-  request: Request;
-  response: Response;
+  request: ApiRequest;
+  response: ApiResponse;
 }
 
 export interface DefaultProperty {
@@ -37,13 +37,12 @@ type PropertyValueType = string | number | boolean;
 
 type ResponseExample = Record<string, PropertyValueType> | Record<string, PropertyValueType>[];
 
-export interface Request {
+export interface ApiRequest {
   body?: Body;
   query?: Query;
   params?: Params;
 }
 
-export interface Response {
-  properties: Record<string, DefaultProperty>;
+export interface ApiResponse {
   example: ResponseExample;
 }
