@@ -1,37 +1,6 @@
-import { ApiResponse, Controller, DefaultProperty, Endpoint, Project } from "@/lib/types";
+import { ApiResponse, DefaultProperty } from "@/lib/types";
 
-export function generateCurlCommand(project: Project, controller: Controller, endpoint: Endpoint) {
-  const url = `${project.serverUrl}${controller.basePath ? "/" + controller.basePath : ""}${endpoint.path}`;
-  const { body, params, query } = endpoint.request;
-  const { example } = endpoint.response;
-
-  let processedUrl = url;
-
-  if (params) {
-    processedUrl = processUrlParameters(processedUrl, params.properties, example);
-  }
-
-  if (query) {
-    processedUrl = processQueryParameters(processedUrl, query.properties, example);
-  }
-
-  let curlCommand = `curl -X ${endpoint.method} ${processedUrl} \\\n`;
-
-  if (body) {
-    const requestBody = processRequestBody(body.properties, example);
-    const formattedBody = JSON.stringify(requestBody, null, 2);
-    curlCommand += `-H "Content-Type: application/json" \\\n`;
-    curlCommand += `-d '${formattedBody}'`;
-  }
-
-  if (curlCommand.endsWith("\\\n")) {
-    return curlCommand.slice(0, -3);
-  }
-
-  return curlCommand;
-}
-
-function processRequestBody(bodyProps: Record<string, DefaultProperty>, example: ApiResponse["example"]) {
+export function processRequestBody(bodyProps: Record<string, DefaultProperty>, example: ApiResponse["example"]) {
   const requestBody: Record<string, any> = {};
 
   if (!example) {
@@ -60,7 +29,7 @@ function processRequestBody(bodyProps: Record<string, DefaultProperty>, example:
   return requestBody;
 }
 
-function processQueryParameters(
+export function processQueryParameters(
   url: string,
   queryProps: Record<string, DefaultProperty>,
   responseExample?: Record<string, any>
@@ -95,7 +64,7 @@ function processQueryParameters(
   return url;
 }
 
-function processUrlParameters(
+export function processUrlParameters(
   url: string,
   paramsProps: Record<string, DefaultProperty>,
   responseExample: Record<string, any>
