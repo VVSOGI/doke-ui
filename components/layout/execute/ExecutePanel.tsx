@@ -3,7 +3,7 @@
 import React, { memo, useEffect, useState } from "react";
 import { CurlCommand, ExecuteHeader, ExecuteResponseExample } from "@/components";
 import { NotoSans } from "@/lib/assets";
-import { Controller, DefaultProperty, Endpoint, Project } from "@/lib/types";
+import { Controller, Endpoint, Project } from "@/lib/types";
 import { processQueryParameters, processRequestBody, processUrlParameters } from "@/lib/utils/generateCurlCommand";
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
 
 function Component({ projectData, controllerData, selected, setSelected }: Props) {
   const [curlCommand, setCurlCommand] = useState("");
-  const [bodyProps, setBodyProps] = useState<Record<string, DefaultProperty>>();
+  const [bodyProps, setBodyProps] = useState<Record<string, string>>();
   const styles = selected ? "flex-1" : "flex-0";
 
   useEffect(() => {
@@ -46,11 +46,6 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
     setCurlCommand(curlCommand);
   }, [selected]);
 
-  useEffect(() => {
-    const formattedBody = JSON.stringify(bodyProps, null, 2);
-    setCurlCommand(curlCommand + `-d '${formattedBody}'`);
-  }, [bodyProps]);
-
   return (
     <div
       className={`
@@ -67,7 +62,27 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
               <span>{selected.method}</span>
               <span>/{controllerData.basePath + selected.path}</span>
             </div>
-            <CurlCommand command={curlCommand} />
+            <div className="flex flex-col gap-4">
+              {bodyProps &&
+                Object.entries(bodyProps).map(([key, value]) => {
+                  return (
+                    <div key={key} className="flex flex-col gap-2">
+                      <div className="text-2 text-white">{key}</div>
+                      <input
+                        onChange={(e) => {
+                          const newProps = { ...bodyProps };
+                          newProps[key] = e.currentTarget.value;
+                          setBodyProps(newProps);
+                        }}
+                        className="w-full py-4 px-8 rounded-sm outline-none border-none bg-gray-800 text-1 text-white"
+                        placeholder={value}
+                        type="text"
+                      />
+                    </div>
+                  );
+                })}
+            </div>
+            <CurlCommand command={curlCommand} formattedBody={JSON.stringify(bodyProps, null, 2) || undefined} />
             <ExecuteResponseExample endpoint={selected} />
           </div>
         </div>
