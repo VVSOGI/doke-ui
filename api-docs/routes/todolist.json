@@ -135,7 +135,7 @@
       }
     },
     {
-      "path": "//dates/:categoryId",
+      "path": "/dates/:categoryId",
       "method": "GET",
       "name": "Get Todolists By Date",
       "description": "\n      This endpoint retrieves todolist items organized by date for a specific category. \n      It allows filtering by completion status through the optional \"checked\" query parameter. The response returns todolist items grouped by date, \n      with each date containing an array of todolist objects that were either created or updated on that date. \n      This endpoint is particularly useful for displaying calendar views or tracking todolist activity over time.\n    ",
@@ -243,7 +243,7 @@
       }
     },
     {
-      "path": "//order",
+      "path": "/order",
       "method": "PATCH",
       "name": "Update Todo Order",
       "description": "This endpoint updates the display order of a specific todolist item within its category.\n  It requires both the todolist's unique identifier and the new numerical order position to be provided.\n  The order value determines the position of the todolist item when displayed in a sequence with other items.\n  This endpoint is essential for implementing drag-and-drop reordering functionality or manual sorting of todolist items.",

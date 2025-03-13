@@ -8,6 +8,14 @@ export function generateCurlCommand(project: Project, controller: Controller, en
   let curlCommand = `curl -X ${endpoint.method} `;
   let processedUrl = url;
 
+  if (params) {
+    processedUrl = processUrlParameters(processedUrl, params.properties, example);
+  }
+
+  if (query) {
+    processedUrl = processQueryParameters(processedUrl, query.properties, example);
+  }
+
   if (body) {
     const requestBody = processRequestBody(body.properties, example);
     const formattedBody = JSON.stringify(requestBody, null, 2);
@@ -42,4 +50,65 @@ function processRequestBody(bodyProps: Record<string, DefaultProperty>, example:
   }
 
   return requestBody;
+}
+
+function processQueryParameters(
+  url: string,
+  queryProps: Record<string, DefaultProperty>,
+  responseExample?: Record<string, any>
+) {
+  const queryStrings = [];
+
+  for (const paramName in queryProps) {
+    const paramInfo = queryProps[paramName];
+
+    let paramValue;
+
+    if (responseExample) {
+      const choiced = Array.isArray(responseExample) ? responseExample[0] : responseExample;
+      paramValue = choiced[paramName];
+    }
+
+    if (!paramValue) {
+      if (paramInfo.type === "boolean") {
+        paramValue = "false";
+      } else {
+        paramValue = `{${paramName}}`;
+      }
+    }
+
+    queryStrings.push(`${paramName}=${paramValue}`);
+  }
+
+  if (queryStrings.length > 0) {
+    return `${url}?${queryStrings.join("&")}`;
+  }
+
+  return url;
+}
+
+function processUrlParameters(
+  url: string,
+  paramsProps: Record<string, DefaultProperty>,
+  responseExample: Record<string, any>
+) {
+  let processedUrl = url;
+
+  for (const paramName in paramsProps) {
+    const paramPattern = new RegExp(`:${paramName}`, "g");
+    let paramValue;
+
+    if (responseExample) {
+      const choiced = Array.isArray(responseExample) ? responseExample[0] : responseExample;
+      paramValue = choiced[paramName];
+    }
+
+    if (!paramValue) {
+      paramValue = `{${paramName}}`;
+    }
+
+    processedUrl = processedUrl.replace(paramPattern, paramValue);
+  }
+
+  return processedUrl;
 }
