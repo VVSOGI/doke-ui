@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { JsonView } from "@/components";
 import { Endpoint } from "@/lib/types";
 
@@ -6,10 +6,10 @@ interface Props {
   endpoint: Endpoint;
 }
 
-export function ExecuteResponseExample({ endpoint }: Props) {
+function Component({ endpoint }: Props) {
   return (
     <div className="flex flex-col gap-4">
-      <div className={`text-white text-2 font-300`}>Example Response</div>
+      <div className={`text-white text-2 font-400`}>Example Response</div>
       <div className="w-full h-fit p-8 bg-gray-800 rounded-sm">
         <JsonView
           src={endpoint.response.example}
@@ -22,3 +22,5 @@ export function ExecuteResponseExample({ endpoint }: Props) {
     </div>
   );
 }
+
+export const ExecuteResponseExample = memo(Component);
