@@ -1,6 +1,6 @@
 "use client";
 
-import React, { memo, useEffect } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { Icon, JsonView } from "@/components";
 import { NotoSans } from "@/lib/assets";
 import { ICONS_LIST } from "@/lib/constants";
@@ -15,11 +15,13 @@ interface Props {
 }
 
 function Component({ projectData, controllerData, selected, setSelected }: Props) {
+  const [curlCommand, setCurlCommand] = useState("");
   const styles = selected ? "flex-1" : "flex-0";
+
   useEffect(() => {
     if (!selected) return;
-
-    generateCurlCommand(projectData, controllerData, selected);
+    const generated = generateCurlCommand(projectData, controllerData, selected);
+    setCurlCommand(generated);
   }, [selected]);
 
   return (
@@ -51,7 +53,9 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
             </div>
             <div className="flex flex-col gap-4 mt-4">
               <div className={`text-white text-2 font-300`}>Example Request</div>
-              <div className="w-full h-fit p-8 bg-gray-800 rounded-sm text-white text-1 font-300 whitespace-pre-wrap"></div>
+              <div className="w-full h-fit p-8 bg-gray-800 rounded-sm text-white text-1 font-300 whitespace-pre-wrap">
+                {curlCommand}
+              </div>
             </div>
             <div className="flex flex-col gap-4">
               <div className={`text-white text-2 font-300`}>Example Response</div>

@@ -5,7 +5,6 @@ export function generateCurlCommand(project: Project, controller: Controller, en
   const { body, params, query } = endpoint.request;
   const { example } = endpoint.response;
 
-  let curlCommand = `curl -X ${endpoint.method} `;
   let processedUrl = url;
 
   if (params) {
@@ -16,11 +15,20 @@ export function generateCurlCommand(project: Project, controller: Controller, en
     processedUrl = processQueryParameters(processedUrl, query.properties, example);
   }
 
+  let curlCommand = `curl -X ${endpoint.method} ${processedUrl} \\\n`;
+
   if (body) {
     const requestBody = processRequestBody(body.properties, example);
     const formattedBody = JSON.stringify(requestBody, null, 2);
+    curlCommand += `-H "Content-Type: application/json" \\\n`;
     curlCommand += `-d '${formattedBody}'`;
   }
+
+  if (curlCommand.endsWith("\\\n")) {
+    return curlCommand.slice(0, -3);
+  }
+
+  return curlCommand;
 }
 
 function processRequestBody(bodyProps: Record<string, DefaultProperty>, example: ApiResponse["example"]) {
