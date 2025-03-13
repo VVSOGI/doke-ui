@@ -44,6 +44,10 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
     }
 
     setCurlCommand(curlCommand);
+
+    return () => {
+      setBodyProps(undefined);
+    };
   }, [selected]);
 
   return (
@@ -54,7 +58,7 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
       `}
     >
       {selected && (
-        <div>
+        <>
           <ExecuteHeader onClick={() => setSelected(null)} />
           <div className={`flex flex-col gap-4 pb-8 px-11 ${NotoSans.className}`}>
             <div className="text-5 font-300 text-white">{selected.name}</div>
@@ -85,7 +89,7 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
             <CurlCommand command={curlCommand} formattedBody={JSON.stringify(bodyProps, null, 2) || undefined} />
             <ExecuteResponseExample endpoint={selected} />
           </div>
-        </div>
+        </>
       )}
     </div>
   );
