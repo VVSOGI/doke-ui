@@ -4,8 +4,8 @@ import React, { memo, useEffect, useState } from "react";
 import { Icon, JsonView } from "@/components";
 import { NotoSans } from "@/lib/assets";
 import { ICONS_LIST } from "@/lib/constants";
-import { Controller, Endpoint, Project } from "@/lib/types";
-import { generateCurlCommand } from "@/lib/utils/generateCurlCommand";
+import { Controller, DefaultProperty, Endpoint, Project } from "@/lib/types";
+import { processQueryParameters, processRequestBody, processUrlParameters } from "@/lib/utils/generateCurlCommand";
 
 interface Props {
   projectData: Project;
@@ -16,13 +16,41 @@ interface Props {
 
 function Component({ projectData, controllerData, selected, setSelected }: Props) {
   const [curlCommand, setCurlCommand] = useState("");
+  const [bodyProps, setBodyProps] = useState<Record<string, DefaultProperty>>();
   const styles = selected ? "flex-1" : "flex-0";
 
   useEffect(() => {
     if (!selected) return;
-    const generated = generateCurlCommand(projectData, controllerData, selected);
-    setCurlCommand(generated);
+    const url = `${projectData.serverUrl}${controllerData.basePath ? "/" + controllerData.basePath : ""}${
+      selected.path
+    }`;
+    const { body, params, query } = selected.request;
+    const { example } = selected.response;
+
+    let processedUrl = url;
+    let curlCommand = `curl -X ${selected.method} ${processedUrl} \\\n`;
+
+    if (params) {
+      processedUrl = processUrlParameters(processedUrl, params.properties, example);
+    }
+
+    if (query) {
+      processedUrl = processQueryParameters(processedUrl, query.properties, example);
+    }
+
+    if (body) {
+      const requestBody = processRequestBody(body.properties, example);
+      setBodyProps(requestBody);
+      curlCommand += `-H "Content-Type: application/json" \\\n`;
+    }
+
+    setCurlCommand(curlCommand);
   }, [selected]);
+
+  useEffect(() => {
+    const formattedBody = JSON.stringify(bodyProps, null, 2);
+    setCurlCommand(curlCommand + `-d '${formattedBody}'`);
+  }, [bodyProps]);
 
   return (
     <div
