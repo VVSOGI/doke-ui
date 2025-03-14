@@ -29,11 +29,7 @@ export function processRequestBody(bodyProps: Record<string, DefaultProperty>, e
   return requestBody;
 }
 
-export function processQueryParameters(
-  url: string,
-  queryProps: Record<string, DefaultProperty>,
-  responseExample?: Record<string, any>
-) {
+export function processQueryParameters(queryProps: Record<string, DefaultProperty>) {
   const queryParams: Record<string, any> = {};
 
   for (const paramName in queryProps) {

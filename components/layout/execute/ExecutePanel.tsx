@@ -39,7 +39,7 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
     }
 
     if (query) {
-      const requestQuery = processQueryParameters(processedUrl, query.properties, example);
+      const requestQuery = processQueryParameters(query.properties);
       setQueryProps(requestQuery);
     }
 
