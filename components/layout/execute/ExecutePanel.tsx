@@ -91,6 +91,7 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
                     <div key={key} className="flex flex-col gap-2">
                       <div className="text-2 text-white">{key}</div>
                       <input
+                        value={paramsProps[key]}
                         onChange={(e) => {
                           const newProps = { ...paramsProps };
                           newProps[key] = e.currentTarget.value;
