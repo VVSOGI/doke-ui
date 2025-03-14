@@ -1,7 +1,7 @@
 "use client";
 
 import React, { memo, useEffect, useState } from "react";
-import { CurlBodyProps, CurlCommand, ExecuteHeader, ExecuteResponseExample } from "@/components";
+import { CurlBodyProps, CurlCommand, CurlParamProps, ExecuteHeader, ExecuteResponseExample } from "@/components";
 import { NotoSans } from "@/lib/assets";
 import { Controller, Endpoint, Project } from "@/lib/types";
 import { processQueryParameters, processRequestBody, processUrlParameters } from "@/lib/utils/generateCurlCommand";
@@ -17,7 +17,10 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
   const [startCommand, setStartCurlCommand] = useState("");
   const [headers, setHeaders] = useState("");
   const [bodyProps, setBodyProps] = useState<Record<string, string>>();
+  const [queryProps, setQueryProps] = useState<Record<string, string>>();
   const [paramsProps, setParamsProps] = useState<Record<string, string>>();
+  const [formattedBodies, setFormattedBodies] = useState("");
+  const [formattedQuerys, setFormattedQuerys] = useState("");
   const [formattedParams, setFormattedParams] = useState("");
   const styles = selected ? "flex-1" : "flex-0";
 
@@ -36,7 +39,8 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
     }
 
     if (query) {
-      processedUrl = processQueryParameters(processedUrl, query.properties, example);
+      const requestQuery = processQueryParameters(processedUrl, query.properties, example);
+      setQueryProps(requestQuery);
     }
 
     if (body) {
@@ -50,10 +54,18 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
     return () => {
       setBodyProps(undefined);
       setParamsProps(undefined);
+      setQueryProps(undefined);
       setHeaders("");
+      setFormattedBodies("");
       setFormattedParams("");
+      setFormattedQuerys("");
     };
   }, [selected]);
+
+  useEffect(() => {
+    if (!bodyProps) return;
+    setFormattedBodies(JSON.stringify(bodyProps, null, 2));
+  }, [bodyProps]);
 
   useEffect(() => {
     if (!paramsProps) return;
@@ -67,6 +79,18 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
     setFormattedParams(commands.join(""));
   }, [paramsProps]);
 
+  useEffect(() => {
+    if (!queryProps) return;
+    const commands = Object.entries(queryProps).map(([key, value], index) => {
+      if (index === 0) {
+        return `?${key}=${value}`;
+      } else {
+        return `&${key}=${value}`;
+      }
+    });
+    setFormattedQuerys(commands.join(""));
+  }, [queryProps]);
+
   return (
     <div
       className={`
@@ -77,39 +101,44 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
       {selected && (
         <>
           <ExecuteHeader onClick={() => setSelected(null)} />
-          <div className={`flex flex-col gap-4 pb-8 px-11 ${NotoSans.className}`}>
-            <div className="text-5 font-300 text-white">{selected.name}</div>
-            <div className="flex gap-4 text-white text-3 font-300">
+          <div className={`flex flex-col pb-8 px-11 ${NotoSans.className}`}>
+            <div className="mb-4 text-5 font-300 text-white">{selected.name}</div>
+            <div className="flex gap-4 mb-4 text-white text-3 font-300">
               <span>{selected.method}</span>
               <span>/{controllerData.basePath + selected.path}</span>
             </div>
-            <CurlBodyProps bodyProps={bodyProps} setBodyProps={setBodyProps} />
             <div className="flex flex-col gap-4">
-              {paramsProps &&
-                Object.entries(paramsProps).map(([key, value]) => {
-                  return (
-                    <div key={key} className="flex flex-col gap-2">
-                      <div className="text-2 text-white">{key}</div>
-                      <input
-                        value={paramsProps[key]}
-                        onChange={(e) => {
-                          const newProps = { ...paramsProps };
-                          newProps[key] = e.currentTarget.value;
-                          setParamsProps(newProps);
-                        }}
-                        className="w-full py-4 px-8 rounded-sm outline-none border-none bg-gray-800 text-1 text-white"
-                        placeholder={value}
-                        type="text"
-                      />
-                    </div>
-                  );
-                })}
+              {bodyProps && <CurlBodyProps bodyProps={bodyProps} setBodyProps={setBodyProps} />}
+              {paramsProps && <CurlParamProps paramsProps={paramsProps} setParamsProps={setParamsProps} />}
+              {queryProps && (
+                <div className="flex flex-col gap-4">
+                  {Object.entries(queryProps).map(([key]) => {
+                    return (
+                      <div key={key} className="flex flex-col gap-2">
+                        <div className="text-2 text-white">{key}</div>
+                        <input
+                          value={queryProps[key]}
+                          onChange={(e) => {
+                            const newProps = { ...queryProps };
+                            newProps[key] = e.currentTarget.value;
+                            setQueryProps(newProps);
+                          }}
+                          className="w-full py-4 px-8 rounded-sm outline-none border-none bg-gray-800 text-1 text-white"
+                          placeholder={"Please enter a valid value."}
+                          type="text"
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
             <CurlCommand
               startCommand={startCommand}
               headers={headers}
-              formattedBody={JSON.stringify(bodyProps, null, 2) || undefined}
+              formattedBody={formattedBodies}
               formattedParams={formattedParams}
+              formattedQuerys={formattedQuerys}
             />
             <ExecuteResponseExample endpoint={selected} />
           </div>

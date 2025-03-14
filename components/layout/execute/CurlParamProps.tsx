@@ -1,26 +1,26 @@
 import React, { memo } from "react";
 
 interface Props {
-  bodyProps: Record<string, string>;
-  setBodyProps: (value: React.SetStateAction<Record<string, string> | undefined>) => void;
+  paramsProps: Record<string, string>;
+  setParamsProps: (value: React.SetStateAction<Record<string, string> | undefined>) => void;
 }
 
-function Component({ bodyProps, setBodyProps }: Props) {
+function Component({ paramsProps, setParamsProps }: Props) {
   return (
     <div className="flex flex-col gap-4">
-      {Object.entries(bodyProps).map(([key, value]) => {
+      {Object.entries(paramsProps).map(([key]) => {
         return (
           <div key={key} className="flex flex-col gap-2">
             <div className="text-2 text-white">{key}</div>
             <input
-              value={bodyProps[key]}
+              value={paramsProps[key]}
               onChange={(e) => {
-                const newProps = { ...bodyProps };
+                const newProps = { ...paramsProps };
                 newProps[key] = e.currentTarget.value;
-                setBodyProps(newProps);
+                setParamsProps(newProps);
               }}
               className="w-full py-4 px-8 rounded-sm outline-none border-none bg-gray-800 text-1 text-white"
-              placeholder={value}
+              placeholder={"Please enter a valid value."}
               type="text"
             />
           </div>
@@ -30,4 +30,4 @@ function Component({ bodyProps, setBodyProps }: Props) {
   );
 }
 
-export const CurlBodyProps = memo(Component);
+export const CurlParamProps = memo(Component);
