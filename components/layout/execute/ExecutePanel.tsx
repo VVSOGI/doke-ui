@@ -17,7 +17,10 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
   const [startCommand, setStartCurlCommand] = useState("");
   const [headers, setHeaders] = useState("");
   const [bodyProps, setBodyProps] = useState<Record<string, string>>();
+  const [queryProps, setQueryProps] = useState<Record<string, string>>();
   const [paramsProps, setParamsProps] = useState<Record<string, string>>();
+  const [formattedBodies, setFormattedBodies] = useState("");
+  const [formattedQuerys, setFormattedQuerys] = useState("");
   const [formattedParams, setFormattedParams] = useState("");
   const styles = selected ? "flex-1" : "flex-0";
 
@@ -36,7 +39,8 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
     }
 
     if (query) {
-      processedUrl = processQueryParameters(processedUrl, query.properties, example);
+      const requestQuery = processQueryParameters(processedUrl, query.properties, example);
+      setQueryProps(requestQuery);
     }
 
     if (body) {
@@ -50,10 +54,18 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
     return () => {
       setBodyProps(undefined);
       setParamsProps(undefined);
+      setQueryProps(undefined);
       setHeaders("");
+      setFormattedBodies("");
       setFormattedParams("");
+      setFormattedQuerys("");
     };
   }, [selected]);
+
+  useEffect(() => {
+    if (!bodyProps) return;
+    setFormattedBodies(JSON.stringify(bodyProps, null, 2));
+  }, [bodyProps]);
 
   useEffect(() => {
     if (!paramsProps) return;
@@ -66,6 +78,18 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
     });
     setFormattedParams(commands.join(""));
   }, [paramsProps]);
+
+  useEffect(() => {
+    if (!queryProps) return;
+    const commands = Object.entries(queryProps).map(([key, value], index) => {
+      if (index === 0) {
+        return `?${key}=${value}`;
+      } else {
+        return `&${key}=${value}`;
+      }
+    });
+    setFormattedQuerys(commands.join(""));
+  }, [queryProps]);
 
   return (
     <div
@@ -83,13 +107,38 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
               <span>{selected.method}</span>
               <span>/{controllerData.basePath + selected.path}</span>
             </div>
-            {bodyProps && <CurlBodyProps bodyProps={bodyProps} setBodyProps={setBodyProps} />}
-            {paramsProps && <CurlParamProps paramsProps={paramsProps} setParamsProps={setParamsProps} />}
+            <div className="flex flex-col gap-4">
+              {bodyProps && <CurlBodyProps bodyProps={bodyProps} setBodyProps={setBodyProps} />}
+              {paramsProps && <CurlParamProps paramsProps={paramsProps} setParamsProps={setParamsProps} />}
+              {queryProps && (
+                <div className="flex flex-col gap-4">
+                  {Object.entries(queryProps).map(([key]) => {
+                    return (
+                      <div key={key} className="flex flex-col gap-2">
+                        <div className="text-2 text-white">{key}</div>
+                        <input
+                          value={queryProps[key]}
+                          onChange={(e) => {
+                            const newProps = { ...queryProps };
+                            newProps[key] = e.currentTarget.value;
+                            setQueryProps(newProps);
+                          }}
+                          className="w-full py-4 px-8 rounded-sm outline-none border-none bg-gray-800 text-1 text-white"
+                          placeholder={"Please enter a valid value."}
+                          type="text"
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
             <CurlCommand
               startCommand={startCommand}
               headers={headers}
-              formattedBody={JSON.stringify(bodyProps, null, 2) || undefined}
+              formattedBody={formattedBodies}
               formattedParams={formattedParams}
+              formattedQuerys={formattedQuerys}
             />
             <ExecuteResponseExample endpoint={selected} />
           </div>
