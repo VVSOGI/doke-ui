@@ -65,27 +65,19 @@ export function processQueryParameters(
 }
 
 export function processUrlParameters(
-  url: string,
   paramsProps: Record<string, DefaultProperty>,
   responseExample: Record<string, any>
 ) {
-  let processedUrl = url;
+  const requestParams: Record<string, any> = {};
 
   for (const paramName in paramsProps) {
-    const paramPattern = new RegExp(`:${paramName}`, "g");
-    let paramValue;
-
     if (responseExample) {
       const choiced = Array.isArray(responseExample) ? responseExample[0] : responseExample;
-      paramValue = choiced[paramName];
+      requestParams[paramName] = choiced[paramName];
     }
 
-    if (!paramValue) {
-      paramValue = `{${paramName}}`;
-    }
-
-    processedUrl = processedUrl.replace(paramPattern, paramValue);
+    requestParams[paramName] = `{${paramName}}`;
   }
 
-  return processedUrl;
+  return requestParams;
 }
