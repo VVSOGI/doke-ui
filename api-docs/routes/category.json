@@ -2,9 +2,7 @@
   "controllerName": "Category",
   "basePath": "category",
   "description": "Category management API endpoints",
-  "tags": [
-    "Category"
-  ],
+  "tags": ["Category"],
   "endpoints": [
     {
       "path": "",
@@ -75,7 +73,7 @@
       }
     },
     {
-      "path": "/:categoryId",
+      "path": "/:categoryId/post/:postId",
       "method": "GET",
       "name": "Get Category By Id",
       "description": "This endpoint retrieves detailed information about a specific category identified by its unique categoryId.\n  It returns the complete category object including its identifier, title, timestamps, and deletion status.\n  The endpoint will return information even for soft-deleted categories, allowing applications to check deletion status.\n  This endpoint is useful for viewing category details, verifying existence, or checking status before performing operations on the category.",
@@ -83,6 +81,11 @@
         "params": {
           "properties": {
             "categoryId": {
+              "type": "string",
+              "description": "Target category Id that you find",
+              "required": true
+            },
+            "postId": {
               "type": "string",
               "description": "Target category Id that you find",
               "required": true
