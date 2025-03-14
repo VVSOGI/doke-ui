@@ -18,6 +18,7 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
   const [headers, setHeaders] = useState("");
   const [bodyProps, setBodyProps] = useState<Record<string, string>>();
   const [paramsProps, setParamsProps] = useState<Record<string, string>>();
+  const [formattedParams, setFormattedParams] = useState("");
   const styles = selected ? "flex-1" : "flex-0";
 
   useEffect(() => {
@@ -50,8 +51,21 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
       setBodyProps(undefined);
       setParamsProps(undefined);
       setHeaders("");
+      setFormattedParams("");
     };
   }, [selected]);
+
+  useEffect(() => {
+    if (!paramsProps) return;
+    const commands = Object.entries(paramsProps).map(([key, value], index) => {
+      if (index === 0) {
+        return `/${value}`;
+      } else {
+        return `/${key}/${value}`;
+      }
+    });
+    setFormattedParams(commands.join(""));
+  }, [paramsProps]);
 
   return (
     <div
@@ -70,10 +84,32 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
               <span>/{controllerData.basePath + selected.path}</span>
             </div>
             <CurlBodyProps bodyProps={bodyProps} setBodyProps={setBodyProps} />
+            <div className="flex flex-col gap-4">
+              {paramsProps &&
+                Object.entries(paramsProps).map(([key, value]) => {
+                  return (
+                    <div key={key} className="flex flex-col gap-2">
+                      <div className="text-2 text-white">{key}</div>
+                      <input
+                        value={paramsProps[key]}
+                        onChange={(e) => {
+                          const newProps = { ...paramsProps };
+                          newProps[key] = e.currentTarget.value;
+                          setParamsProps(newProps);
+                        }}
+                        className="w-full py-4 px-8 rounded-sm outline-none border-none bg-gray-800 text-1 text-white"
+                        placeholder={value}
+                        type="text"
+                      />
+                    </div>
+                  );
+                })}
+            </div>
             <CurlCommand
               startCommand={startCommand}
               headers={headers}
               formattedBody={JSON.stringify(bodyProps, null, 2) || undefined}
+              formattedParams={formattedParams}
             />
             <ExecuteResponseExample endpoint={selected} />
           </div>
