@@ -1,11 +1,11 @@
-import React from "react";
+import React, { memo } from "react";
 
 interface Props {
   paramsProps: Record<string, string>;
   setParamsProps: (value: React.SetStateAction<Record<string, string> | undefined>) => void;
 }
 
-export function CurlParamProps({ paramsProps, setParamsProps }: Props) {
+function Component({ paramsProps, setParamsProps }: Props) {
   return (
     <div className="flex flex-col gap-4">
       {Object.entries(paramsProps).map(([key]) => {
@@ -29,3 +29,5 @@ export function CurlParamProps({ paramsProps, setParamsProps }: Props) {
     </div>
   );
 }
+
+export const CurlParamProps = memo(Component);
