@@ -34,34 +34,13 @@ export function processQueryParameters(
   queryProps: Record<string, DefaultProperty>,
   responseExample?: Record<string, any>
 ) {
-  const queryStrings = [];
+  const queryParams: Record<string, any> = {};
 
   for (const paramName in queryProps) {
-    const paramInfo = queryProps[paramName];
-
-    let paramValue;
-
-    if (responseExample) {
-      const choiced = Array.isArray(responseExample) ? responseExample[0] : responseExample;
-      paramValue = choiced[paramName];
-    }
-
-    if (!paramValue) {
-      if (paramInfo.type === "boolean") {
-        paramValue = "false";
-      } else {
-        paramValue = `{${paramName}}`;
-      }
-    }
-
-    queryStrings.push(`${paramName}=${paramValue}`);
+    queryParams[paramName] = `{${queryProps[paramName].type}}`;
   }
 
-  if (queryStrings.length > 0) {
-    return `${url}?${queryStrings.join("&")}`;
-  }
-
-  return url;
+  return queryParams;
 }
 
 export function processUrlParameters(
