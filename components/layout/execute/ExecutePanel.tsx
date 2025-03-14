@@ -1,7 +1,7 @@
 "use client";
 
 import React, { memo, useEffect, useState } from "react";
-import { CurlBodyProps, CurlCommand, ExecuteHeader, ExecuteResponseExample } from "@/components";
+import { CurlBodyProps, CurlCommand, CurlParamProps, ExecuteHeader, ExecuteResponseExample } from "@/components";
 import { NotoSans } from "@/lib/assets";
 import { Controller, Endpoint, Project } from "@/lib/types";
 import { processQueryParameters, processRequestBody, processUrlParameters } from "@/lib/utils/generateCurlCommand";
@@ -77,34 +77,14 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
       {selected && (
         <>
           <ExecuteHeader onClick={() => setSelected(null)} />
-          <div className={`flex flex-col gap-4 pb-8 px-11 ${NotoSans.className}`}>
-            <div className="text-5 font-300 text-white">{selected.name}</div>
-            <div className="flex gap-4 text-white text-3 font-300">
+          <div className={`flex flex-col pb-8 px-11 ${NotoSans.className}`}>
+            <div className="mb-4 text-5 font-300 text-white">{selected.name}</div>
+            <div className="flex gap-4 mb-4 text-white text-3 font-300">
               <span>{selected.method}</span>
               <span>/{controllerData.basePath + selected.path}</span>
             </div>
-            <CurlBodyProps bodyProps={bodyProps} setBodyProps={setBodyProps} />
-            <div className="flex flex-col gap-4">
-              {paramsProps &&
-                Object.entries(paramsProps).map(([key, value]) => {
-                  return (
-                    <div key={key} className="flex flex-col gap-2">
-                      <div className="text-2 text-white">{key}</div>
-                      <input
-                        value={paramsProps[key]}
-                        onChange={(e) => {
-                          const newProps = { ...paramsProps };
-                          newProps[key] = e.currentTarget.value;
-                          setParamsProps(newProps);
-                        }}
-                        className="w-full py-4 px-8 rounded-sm outline-none border-none bg-gray-800 text-1 text-white"
-                        placeholder={value}
-                        type="text"
-                      />
-                    </div>
-                  );
-                })}
-            </div>
+            {bodyProps && <CurlBodyProps bodyProps={bodyProps} setBodyProps={setBodyProps} />}
+            {paramsProps && <CurlParamProps paramsProps={paramsProps} setParamsProps={setParamsProps} />}
             <CurlCommand
               startCommand={startCommand}
               headers={headers}
