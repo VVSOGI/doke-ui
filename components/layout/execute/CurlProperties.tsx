@@ -1,19 +1,17 @@
+import { CurlProperty } from "@/components";
+import { useExecuteCommand } from "@/contexts";
 import React, { memo } from "react";
-import { CurlPropertyInput } from "@/components";
 
-interface Props {
-  title: string;
-  properties: Record<string, string>;
-  setProperties: (value: React.SetStateAction<Record<string, string> | undefined>) => void;
-}
+function Component() {
+  const { bodyProps, paramsProps, queryProps, setBodyProps, setParamsProps, setQueryProps } = useExecuteCommand();
 
-function Component({ title, properties, setProperties }: Props) {
   return (
-    <div className="flex flex-col">
-      <div className="py-2 text-2 text-white border-b border-gray-300">{title}</div>
-      <div className="py-4">
-        <CurlPropertyInput properties={properties} setProperties={setProperties} />
-      </div>
+    <div className="flex flex-col gap-8">
+      {bodyProps && <CurlProperty title="BODY PROPERTIES" properties={bodyProps} setProperties={setBodyProps} />}
+      {paramsProps && (
+        <CurlProperty title="PARAMS PROPERTIES" properties={paramsProps} setProperties={setParamsProps} />
+      )}
+      {queryProps && <CurlProperty title="QUERY PROPERTIES" properties={queryProps} setProperties={setQueryProps} />}
     </div>
   );
 }
