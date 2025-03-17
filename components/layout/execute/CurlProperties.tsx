@@ -11,7 +11,7 @@ function Component({ title, properties, setProperties }: Props) {
   return (
     <div className="flex flex-col">
       <div className="py-2 text-2 text-white border-b border-gray-300">{title}</div>
-      <div className="py-8 px-4">
+      <div className="py-4">
         <CurlPropertyInput properties={properties} setProperties={setProperties} />
       </div>
     </div>
