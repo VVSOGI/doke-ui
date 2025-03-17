@@ -5,17 +5,12 @@ import { Controller, Endpoint, Project } from "@/lib/types";
 import { processQueryParameters, processRequestBody, processUrlParameters } from "@/lib/utils/generateCurlCommand";
 
 interface ExecuteCommandContextType {
-  controllerData: Controller;
-  projectData: Project;
   selected: Endpoint | null;
   startCommand: string;
   headers: string;
   bodyProps: Record<string, string> | undefined;
   queryProps: Record<string, string> | undefined;
   paramsProps: Record<string, string> | undefined;
-  formattedBodies: string;
-  formattedQuerys: string;
-  formattedParams: string;
   setSelected: (selected: Endpoint | null) => void;
   setBodyProps: React.Dispatch<React.SetStateAction<Record<string, string> | undefined>>;
   setParamsProps: React.Dispatch<React.SetStateAction<Record<string, string> | undefined>>;
@@ -44,9 +39,6 @@ export function ExecuteCommandProvider({
   const [bodyProps, setBodyProps] = useState<Record<string, string>>();
   const [queryProps, setQueryProps] = useState<Record<string, string>>();
   const [paramsProps, setParamsProps] = useState<Record<string, string>>();
-  const [formattedBodies, setFormattedBodies] = useState("");
-  const [formattedQuerys, setFormattedQuerys] = useState("");
-  const [formattedParams, setFormattedParams] = useState("");
 
   useEffect(() => {
     if (!selected) return;
@@ -80,53 +72,16 @@ export function ExecuteCommandProvider({
       setParamsProps(undefined);
       setQueryProps(undefined);
       setHeaders("");
-      setFormattedBodies("");
-      setFormattedParams("");
-      setFormattedQuerys("");
     };
   }, [selected]);
 
-  useEffect(() => {
-    if (!bodyProps) return;
-    setFormattedBodies(JSON.stringify(bodyProps, null, 2));
-  }, [bodyProps]);
-
-  useEffect(() => {
-    if (!paramsProps) return;
-    const commands = Object.entries(paramsProps).map(([key, value], index) => {
-      if (index === 0) {
-        return `/${value}`;
-      } else {
-        return `/${key}/${value}`;
-      }
-    });
-    setFormattedParams(commands.join(""));
-  }, [paramsProps]);
-
-  useEffect(() => {
-    if (!queryProps) return;
-    const commands = Object.entries(queryProps).map(([key, value], index) => {
-      if (index === 0) {
-        return `?${key}=${value}`;
-      } else {
-        return `&${key}=${value}`;
-      }
-    });
-    setFormattedQuerys(commands.join(""));
-  }, [queryProps]);
-
   const value = {
-    controllerData,
-    projectData,
     selected,
     startCommand,
     headers,
     bodyProps,
     queryProps,
     paramsProps,
-    formattedBodies,
-    formattedQuerys,
-    formattedParams,
     setSelected,
     setBodyProps,
     setParamsProps,
