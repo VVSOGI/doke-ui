@@ -19,7 +19,7 @@ function Component({ properties, setProperties }: Props) {
                 newProps[key] = e.currentTarget.value;
                 setProperties(newProps);
               }}
-              className="w-full py-4 px-8 rounded-sm outline-none border-none bg-gray-800 text-1 font-300 text-white"
+              className="w-full py-4 px-8 rounded-sm outline-none border-none bg-gray-600 text-1 font-300 text-white"
               placeholder={"Please enter a valid value."}
               type="text"
             />
