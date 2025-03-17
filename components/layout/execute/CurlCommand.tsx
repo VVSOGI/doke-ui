@@ -3,24 +3,18 @@
 import React, { memo, useEffect, useState } from "react";
 import { Icon } from "@/components";
 import { ICONS_LIST } from "@/lib/constants";
+import { useExecuteCommand } from "@/contexts/ExecuteCommandContext";
 
-interface Props {
-  startCommand: string;
-  headers: string;
-  formattedBody: string | undefined;
-  formattedParams: string;
-  formattedQuerys: string;
-}
-
-function Component({ startCommand, formattedParams, formattedQuerys, headers, formattedBody }: Props) {
+function Component() {
   const [isCopied, setIsCopied] = useState(false);
+  const { startCommand, formattedParams, formattedQuerys, formattedBodies, headers } = useExecuteCommand();
 
   const command =
     startCommand +
     formattedParams +
     formattedQuerys +
     (headers && ` \\\n${headers}`) +
-    (formattedBody && `-d '${formattedBody}'`);
+    (formattedBodies && `-d '${formattedBodies}'`);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
