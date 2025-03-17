@@ -2,10 +2,9 @@
 
 import React, { useRef, useState } from "react";
 import { useScroll } from "@/hooks";
-import { EndpointTitle, Properties, ResponseExample } from ".";
-import { ExecutePanel } from "@/components";
+import { ExecuteCommandProvider } from "@/contexts";
+import { EndpointTitle, Properties, ResponseExample, ExecutePanel } from "@/components";
 import { Controller, Endpoint, Project } from "@/lib/types";
-import { ExecuteCommandProvider } from "@/contexts/ExecuteCommandContext";
 
 interface Props {
   projectData: Project;
