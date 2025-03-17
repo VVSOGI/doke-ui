@@ -1,7 +1,7 @@
 "use client";
 
 import React, { memo, useEffect, useState } from "react";
-import { CurlBodyProps, CurlCommand, CurlParamProps, ExecuteHeader, ExecuteResponseExample } from "@/components";
+import { CurlCommand, CurlProperties, ExecuteHeader, ExecuteResponseExample } from "@/components";
 import { NotoSans } from "@/lib/assets";
 import { Controller, Endpoint, Project } from "@/lib/types";
 import { processQueryParameters, processRequestBody, processUrlParameters } from "@/lib/utils/generateCurlCommand";
@@ -22,6 +22,7 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
   const [formattedBodies, setFormattedBodies] = useState("");
   const [formattedQuerys, setFormattedQuerys] = useState("");
   const [formattedParams, setFormattedParams] = useState("");
+
   const styles = selected ? "flex-1" : "flex-0";
 
   useEffect(() => {
@@ -107,40 +108,27 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
               <span>{selected.method}</span>
               <span>/{controllerData.basePath + selected.path}</span>
             </div>
-            <div className="flex flex-col gap-4">
-              {bodyProps && <CurlBodyProps bodyProps={bodyProps} setBodyProps={setBodyProps} />}
-              {paramsProps && <CurlParamProps paramsProps={paramsProps} setParamsProps={setParamsProps} />}
-              {queryProps && (
-                <div className="flex flex-col gap-4">
-                  {Object.entries(queryProps).map(([key]) => {
-                    return (
-                      <div key={key} className="flex flex-col gap-2">
-                        <div className="text-2 text-white">{key}</div>
-                        <input
-                          value={queryProps[key]}
-                          onChange={(e) => {
-                            const newProps = { ...queryProps };
-                            newProps[key] = e.currentTarget.value;
-                            setQueryProps(newProps);
-                          }}
-                          className="w-full py-4 px-8 rounded-sm outline-none border-none bg-gray-800 text-1 text-white"
-                          placeholder={"Please enter a valid value."}
-                          type="text"
-                        />
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
+            <div className="flex flex-col gap-8">
+              <div className="flex flex-col gap-8">
+                {bodyProps && (
+                  <CurlProperties title="BODY PROPERTIES" properties={bodyProps} setProperties={setBodyProps} />
+                )}
+                {paramsProps && (
+                  <CurlProperties title="PARAMS PROPERTIES" properties={paramsProps} setProperties={setParamsProps} />
+                )}
+                {queryProps && (
+                  <CurlProperties title="QUERY PROPERTIES" properties={queryProps} setProperties={setQueryProps} />
+                )}
+              </div>
+              <CurlCommand
+                startCommand={startCommand}
+                headers={headers}
+                formattedBody={formattedBodies}
+                formattedParams={formattedParams}
+                formattedQuerys={formattedQuerys}
+              />
+              <ExecuteResponseExample endpoint={selected} />
             </div>
-            <CurlCommand
-              startCommand={startCommand}
-              headers={headers}
-              formattedBody={formattedBodies}
-              formattedParams={formattedParams}
-              formattedQuerys={formattedQuerys}
-            />
-            <ExecuteResponseExample endpoint={selected} />
           </div>
         </>
       )}
