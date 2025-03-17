@@ -5,6 +5,7 @@ import { useScroll } from "@/hooks";
 import { EndpointTitle, Properties, ResponseExample } from ".";
 import { ExecutePanel } from "@/components";
 import { Controller, Endpoint, Project } from "@/lib/types";
+import { ExecuteCommandProvider } from "@/contexts/ExecuteCommandContext";
 
 interface Props {
   projectData: Project;
@@ -32,12 +33,14 @@ export function ControllerPanel({ projectData, controllerData }: Props) {
           </div>
         ))}
       </div>
-      <ExecutePanel
+      <ExecuteCommandProvider
         projectData={projectData}
         controllerData={controllerData}
         selected={selected}
         setSelected={setSelected}
-      />
+      >
+        <ExecutePanel />
+      </ExecuteCommandProvider>
     </div>
   );
 }
