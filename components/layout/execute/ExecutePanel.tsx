@@ -1,96 +1,13 @@
 "use client";
 
-import React, { memo, useEffect, useState } from "react";
+import React, { memo } from "react";
+import { useExecuteCommand } from "@/contexts";
 import { CurlCommand, CurlProperties, ExecuteHeader, ExecuteResponseExample } from "@/components";
 import { NotoSans } from "@/lib/assets";
-import { Controller, Endpoint, Project } from "@/lib/types";
-import { processQueryParameters, processRequestBody, processUrlParameters } from "@/lib/utils/generateCurlCommand";
 
-interface Props {
-  projectData: Project;
-  controllerData: Controller;
-  selected: Endpoint | null;
-  setSelected: (selected: Endpoint | null) => void;
-}
-
-function Component({ projectData, controllerData, selected, setSelected }: Props) {
-  const [startCommand, setStartCurlCommand] = useState("");
-  const [headers, setHeaders] = useState("");
-  const [bodyProps, setBodyProps] = useState<Record<string, string>>();
-  const [queryProps, setQueryProps] = useState<Record<string, string>>();
-  const [paramsProps, setParamsProps] = useState<Record<string, string>>();
-  const [formattedBodies, setFormattedBodies] = useState("");
-  const [formattedQuerys, setFormattedQuerys] = useState("");
-  const [formattedParams, setFormattedParams] = useState("");
-
+function Component() {
+  const { controllerData, selected, setSelected } = useExecuteCommand();
   const styles = selected ? "flex-1" : "flex-0";
-
-  useEffect(() => {
-    if (!selected) return;
-    const url = `${projectData.serverUrl}${controllerData.basePath ? "/" + controllerData.basePath : ""}`;
-    const { body, params, query } = selected.request;
-    const { example } = selected.response;
-
-    let processedUrl = url;
-    let startCommand = `curl -X ${selected.method} ${processedUrl}`;
-
-    if (params) {
-      const requestParams = processUrlParameters(params.properties, example);
-      setParamsProps(requestParams);
-    }
-
-    if (query) {
-      const requestQuery = processQueryParameters(query.properties);
-      setQueryProps(requestQuery);
-    }
-
-    if (body) {
-      const requestBody = processRequestBody(body.properties, example);
-      setBodyProps(requestBody);
-      setHeaders((prev) => prev + `-H "Content-Type: application/json" \\\n`);
-    }
-
-    setStartCurlCommand(startCommand);
-
-    return () => {
-      setBodyProps(undefined);
-      setParamsProps(undefined);
-      setQueryProps(undefined);
-      setHeaders("");
-      setFormattedBodies("");
-      setFormattedParams("");
-      setFormattedQuerys("");
-    };
-  }, [selected]);
-
-  useEffect(() => {
-    if (!bodyProps) return;
-    setFormattedBodies(JSON.stringify(bodyProps, null, 2));
-  }, [bodyProps]);
-
-  useEffect(() => {
-    if (!paramsProps) return;
-    const commands = Object.entries(paramsProps).map(([key, value], index) => {
-      if (index === 0) {
-        return `/${value}`;
-      } else {
-        return `/${key}/${value}`;
-      }
-    });
-    setFormattedParams(commands.join(""));
-  }, [paramsProps]);
-
-  useEffect(() => {
-    if (!queryProps) return;
-    const commands = Object.entries(queryProps).map(([key, value], index) => {
-      if (index === 0) {
-        return `?${key}=${value}`;
-      } else {
-        return `&${key}=${value}`;
-      }
-    });
-    setFormattedQuerys(commands.join(""));
-  }, [queryProps]);
 
   return (
     <div
@@ -109,24 +26,8 @@ function Component({ projectData, controllerData, selected, setSelected }: Props
               <span>/{controllerData.basePath + selected.path}</span>
             </div>
             <div className="flex flex-col gap-8">
-              <div className="flex flex-col gap-8">
-                {bodyProps && (
-                  <CurlProperties title="BODY PROPERTIES" properties={bodyProps} setProperties={setBodyProps} />
-                )}
-                {paramsProps && (
-                  <CurlProperties title="PARAMS PROPERTIES" properties={paramsProps} setProperties={setParamsProps} />
-                )}
-                {queryProps && (
-                  <CurlProperties title="QUERY PROPERTIES" properties={queryProps} setProperties={setQueryProps} />
-                )}
-              </div>
-              <CurlCommand
-                startCommand={startCommand}
-                headers={headers}
-                formattedBody={formattedBodies}
-                formattedParams={formattedParams}
-                formattedQuerys={formattedQuerys}
-              />
+              <CurlProperties />
+              <CurlCommand />
               <ExecuteResponseExample endpoint={selected} />
             </div>
           </div>
