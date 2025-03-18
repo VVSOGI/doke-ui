@@ -14,6 +14,14 @@ export function useFormattedCommand({ startCommand, bodyProps, queryProps, param
   const [formattedParams, setFormattedParams] = useState("");
 
   useEffect(() => {
+    return () => {
+      setFormattedBodies("");
+      setFormattedQuerys("");
+      setFormattedParams("");
+    };
+  }, [startCommand, headers, bodyProps, queryProps, paramsProps]);
+
+  useEffect(() => {
     if (!bodyProps) return;
     setFormattedBodies(JSON.stringify(bodyProps, null, 2));
   }, [bodyProps]);
