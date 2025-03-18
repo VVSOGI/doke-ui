@@ -38,7 +38,7 @@ export function ControllerPanel({ projectData, controllerData }: Props) {
         selected={selected}
         setSelected={setSelected}
       >
-        <ExecutePanel controllerData={controllerData} />
+        <ExecutePanel />
       </ExecuteCommandProvider>
     </div>
   );

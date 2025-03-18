@@ -2,26 +2,50 @@
 
 import React, { memo } from "react";
 import { useExecuteCommand } from "@/contexts";
+import { useFormattedCommand } from "@/hooks";
 import { ApiExecuteButton, CurlCommand, CurlProperties, ExecuteHeader, ExecuteResponseExample } from "@/components";
 import { NotoSans } from "@/lib/assets";
-import { Controller } from "@/lib/types";
+import { POSTRequestDefault } from "@/lib/types";
 
-interface Props {
-  controllerData: Controller;
-}
-
-function Component({ controllerData }: Props) {
-  const { selected, bodyProps, paramsProps, queryProps, headers, setSelected } = useExecuteCommand();
+function Component() {
+  const {
+    projectData,
+    controllerData,
+    selected,
+    startCommand,
+    bodyProps,
+    paramsProps,
+    queryProps,
+    headers,
+    setSelected,
+  } = useExecuteCommand();
+  const { command, formattedParams, formattedQuerys } = useFormattedCommand({
+    startCommand,
+    bodyProps,
+    queryProps,
+    paramsProps,
+    headers,
+  });
   const styles = selected ? "flex-1" : "flex-0";
 
   const onClick = () => {
     if (!selected) return;
-    fetch(`http://localhost:3001/api`, {
+
+    const defaultBody: POSTRequestDefault = {
+      serverUrl: projectData.serverUrl,
+      endpoint: "/" + controllerData.basePath,
       method: selected.method,
+      params: formattedParams,
+      query: formattedQuerys,
+      body: bodyProps,
+    };
+
+    fetch(`http://localhost:3001/api`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: bodyProps ? JSON.stringify(bodyProps) : null,
+      body: JSON.stringify(defaultBody),
     });
   };
 
@@ -42,7 +66,7 @@ function Component({ controllerData }: Props) {
           </div>
           <div className="flex flex-col gap-8">
             <CurlProperties />
-            <CurlCommand />
+            <CurlCommand command={command} />
             <ExecuteResponseExample endpoint={selected} />
             <ApiExecuteButton onClick={onClick} />
           </div>
