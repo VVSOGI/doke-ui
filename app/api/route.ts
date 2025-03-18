@@ -1,16 +1,19 @@
-export const dynamic = "force-static";
-
+import { POSTRequestDefault } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
-  const searchParams = req.nextUrl.searchParams;
-  console.log(searchParams);
-
-  return NextResponse.json({ data: "hello world!" });
+interface NextCustomRequest extends NextRequest {
+  json: () => Promise<POSTRequestDefault>;
 }
 
-export async function POST(req: NextRequest) {
-  console.log(await req.json());
+export async function POST(req: NextCustomRequest) {
+  const { serverUrl, endpoint, method, query, params, body } = await req.json();
+
+  const data = await fetch(serverUrl + endpoint + params + query, {
+    body: JSON.stringify(body),
+  });
+
+  const response = await data.json();
+  console.log(response);
 
   return NextResponse.json({ data: "hello world!" });
 }
