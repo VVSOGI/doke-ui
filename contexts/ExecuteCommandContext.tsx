@@ -5,6 +5,8 @@ import { Controller, Endpoint, Project } from "@/lib/types";
 import { processQueryParameters, processRequestBody, processUrlParameters } from "@/lib/utils/generateCurlCommand";
 
 interface ExecuteCommandContextType {
+  projectData: Project;
+  controllerData: Controller;
   selected: Endpoint | null;
   startCommand: string;
   headers: string;
@@ -76,6 +78,8 @@ export function ExecuteCommandProvider({
   }, [selected]);
 
   const value = {
+    projectData,
+    controllerData,
     selected,
     startCommand,
     headers,

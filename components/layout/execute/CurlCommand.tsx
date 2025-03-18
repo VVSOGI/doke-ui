@@ -1,21 +1,15 @@
 "use client";
 
 import React, { memo, useEffect, useState } from "react";
-import { useExecuteCommand } from "@/contexts";
-import { useFormattedCommand } from "@/hooks";
 import { Icon } from "@/components";
 import { ICONS_LIST } from "@/lib/constants";
 
-function Component() {
+interface Props {
+  command: string;
+}
+
+function Component({ command }: Props) {
   const [isCopied, setIsCopied] = useState(false);
-  const { startCommand, headers, bodyProps, queryProps, paramsProps } = useExecuteCommand();
-  const { command } = useFormattedCommand({
-    startCommand,
-    bodyProps,
-    queryProps,
-    paramsProps,
-    headers,
-  });
 
   useEffect(() => {
     const timeout = setTimeout(() => {

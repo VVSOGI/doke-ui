@@ -57,5 +57,7 @@ export function useFormattedCommand({ startCommand, bodyProps, queryProps, param
       formattedQuerys +
       (headers && ` \\\n${headers}`) +
       (formattedBodies && `-d '${formattedBodies}'`),
+    formattedQuerys,
+    formattedParams,
   };
 }
