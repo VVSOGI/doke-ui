@@ -1,3 +1,5 @@
+import { HttpMethods } from "@/lib/types";
+
 export interface Controller {
   controllerName: string;
   basePath: string;
@@ -8,7 +10,7 @@ export interface Controller {
 
 export interface Endpoint {
   path: string;
-  method: string;
+  method: HttpMethods;
   name: string;
   description: string;
   request: ApiRequest;
