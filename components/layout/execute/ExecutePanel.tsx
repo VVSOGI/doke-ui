@@ -2,7 +2,7 @@
 
 import React, { memo } from "react";
 import { useExecuteCommand } from "@/contexts";
-import { CurlCommand, CurlProperties, ExecuteHeader, ExecuteResponseExample } from "@/components";
+import { ApiExecuteButton, CurlCommand, CurlProperties, ExecuteHeader, ExecuteResponseExample } from "@/components";
 import { NotoSans } from "@/lib/assets";
 import { Controller } from "@/lib/types";
 
@@ -11,8 +11,19 @@ interface Props {
 }
 
 function Component({ controllerData }: Props) {
-  const { selected, setSelected } = useExecuteCommand();
+  const { selected, bodyProps, paramsProps, queryProps, headers, setSelected } = useExecuteCommand();
   const styles = selected ? "flex-1" : "flex-0";
+
+  const onClick = () => {
+    if (!selected) return;
+    fetch(`http://localhost:3001/api`, {
+      method: selected.method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: bodyProps ? JSON.stringify(bodyProps) : null,
+    });
+  };
 
   return (
     selected && (
@@ -33,6 +44,7 @@ function Component({ controllerData }: Props) {
             <CurlProperties />
             <CurlCommand />
             <ExecuteResponseExample endpoint={selected} />
+            <ApiExecuteButton onClick={onClick} />
           </div>
         </div>
       </div>

@@ -35,10 +35,10 @@ function Component() {
           {isCopied && <div className="text-1 text-white">copied</div>}
           <Icon
             className={`
-            cursor-pointer select-none
-            hover:text-gray-300
-            active:text-gray-100
-          `}
+              cursor-pointer select-none
+              hover:text-gray-300
+              active:text-gray-100
+            `}
             onClick={() => {
               navigator.clipboard.writeText(command);
               setIsCopied(true);

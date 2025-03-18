@@ -4,7 +4,7 @@ import React, { memo, useRef } from "react";
 import { isEqual } from "es-toolkit";
 import { NotoSans } from "@/lib/assets";
 import { Endpoint } from "@/lib/types";
-import { ApiExecuteButton } from "@/components";
+import { ExecutePanelButton } from "@/components";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 
 interface Props {
@@ -39,7 +39,7 @@ function Component({ endpoint, isScrolling, setSelected }: Props) {
       </div>
       <div className="w-full flex justify-between items-center pr-10">
         <div>{endpoint.name}</div>
-        <ApiExecuteButton
+        <ExecutePanelButton
           onClick={() =>
             setSelected((prev) => {
               if (prev && isEqual(endpoint, prev)) {
