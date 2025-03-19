@@ -1,26 +1,28 @@
 import React, { memo } from "react";
 import { JsonView } from "@/components";
-import { Endpoint } from "@/lib/types";
 
 interface Props {
-  endpoint: Endpoint;
+  title: string;
+  example: Record<string, any> | Record<string, any>[];
 }
 
-function Component({ endpoint }: Props) {
+function Component({ title, example }: Props) {
   return (
     <div className="flex flex-col gap-4">
-      <div className={`text-white text-2 font-400`}>Example Response</div>
+      <div className={`text-white text-2 font-400`}>{title}</div>
       <div className="w-full h-fit p-8 bg-gray-800 rounded-sm">
         <JsonView
-          src={endpoint.response.example}
+          src={example}
           theme={"chalk"}
           style={{ backgroundColor: "transparent" }}
           displayObjectSize={false}
           enableClipboard={false}
+          name={false}
+          collapsed={3}
         />
       </div>
     </div>
   );
 }
 
-export const ExecuteResponseExample = memo(Component);
+export const ExecuteResponse = memo(Component);

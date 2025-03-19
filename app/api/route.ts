@@ -29,6 +29,4 @@ export async function POST(req: NextCustomRequest) {
       { status: 500 }
     );
   }
-
-  return NextResponse.json({ data: "hello world!" });
 }

@@ -2,36 +2,16 @@
 
 import React, { memo } from "react";
 import { useExecuteCommand } from "@/contexts";
-import { useFormattedCommand } from "@/hooks";
+import { useApiExecute, useFormattedCommand } from "@/hooks";
 import { ApiExecuteButton, CurlCommand, CurlProperties, ExecuteHeader, ExecuteResponseExample } from "@/components";
 import { NotoSans } from "@/lib/assets";
-import { POSTRequestDefault } from "@/lib/types";
 
 function Component() {
-  const { projectData, controllerData, selected, bodyProps, setSelected } = useExecuteCommand();
-  const { command, formattedParams, formattedQuerys } = useFormattedCommand();
+  const { controllerData, selected, setSelected } = useExecuteCommand();
+  const { command } = useFormattedCommand();
+  const { responseData, onClickExecute } = useApiExecute();
+
   const styles = selected ? "flex-1" : "flex-0";
-
-  const onClick = async () => {
-    if (!selected) return;
-
-    const defaultBody: POSTRequestDefault = {
-      serverUrl: projectData.serverUrl,
-      endpoint: "/" + controllerData.basePath,
-      method: selected.method,
-      params: formattedParams,
-      query: formattedQuerys,
-      body: bodyProps,
-    };
-
-    const response = await fetch(`http://localhost:3001/api`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(defaultBody),
-    });
-  };
 
   return (
     selected && (
@@ -52,7 +32,7 @@ function Component() {
             <CurlProperties />
             <CurlCommand command={command} />
             <ExecuteResponseExample endpoint={selected} />
-            <ApiExecuteButton onClick={onClick} />
+            <ApiExecuteButton onClick={onClickExecute} />
           </div>
         </div>
       </div>
