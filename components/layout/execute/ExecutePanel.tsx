@@ -3,7 +3,7 @@
 import React, { memo } from "react";
 import { useExecuteCommand } from "@/contexts";
 import { useApiExecute, useFormattedCommand } from "@/hooks";
-import { ApiExecuteButton, CurlCommand, CurlProperties, ExecuteHeader, ExecuteResponseExample } from "@/components";
+import { ApiExecuteButton, CurlCommand, CurlProperties, ExecuteHeader, ExecuteResponse } from "@/components";
 import { NotoSans } from "@/lib/assets";
 
 function Component() {
@@ -31,7 +31,11 @@ function Component() {
           <div className="flex flex-col gap-8">
             <CurlProperties />
             <CurlCommand command={command} />
-            <ExecuteResponseExample endpoint={selected} />
+            {responseData ? (
+              <ExecuteResponse title="Actual Server Response" example={responseData} />
+            ) : (
+              <ExecuteResponse title="Example Response" example={selected.response.example} />
+            )}
             <ApiExecuteButton onClick={onClickExecute} />
           </div>
         </div>
