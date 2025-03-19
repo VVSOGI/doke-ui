@@ -13,7 +13,7 @@ function Component({ endpoint }: Props) {
     <div>
       <PropertyTitle properties={{}}>RESPONSE</PropertyTitle>
       <div className="pt-8 px-7">
-        <JsonView src={endpoint.response.example} collapsed={1} />
+        <JsonView src={endpoint.response.example} collapsed={1} name={false} />
       </div>
     </div>
   );
