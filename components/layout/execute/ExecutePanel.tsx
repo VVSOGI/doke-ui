@@ -8,27 +8,11 @@ import { NotoSans } from "@/lib/assets";
 import { POSTRequestDefault } from "@/lib/types";
 
 function Component() {
-  const {
-    projectData,
-    controllerData,
-    selected,
-    startCommand,
-    bodyProps,
-    paramsProps,
-    queryProps,
-    headers,
-    setSelected,
-  } = useExecuteCommand();
-  const { command, formattedParams, formattedQuerys } = useFormattedCommand({
-    startCommand,
-    bodyProps,
-    queryProps,
-    paramsProps,
-    headers,
-  });
+  const { projectData, controllerData, selected, bodyProps, setSelected } = useExecuteCommand();
+  const { command, formattedParams, formattedQuerys } = useFormattedCommand();
   const styles = selected ? "flex-1" : "flex-0";
 
-  const onClick = () => {
+  const onClick = async () => {
     if (!selected) return;
 
     const defaultBody: POSTRequestDefault = {
@@ -40,7 +24,7 @@ function Component() {
       body: bodyProps,
     };
 
-    fetch(`http://localhost:3001/api`, {
+    const response = await fetch(`http://localhost:3001/api`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -60,7 +44,7 @@ function Component() {
         <ExecuteHeader onClick={() => setSelected(null)} />
         <div className={`flex flex-col pb-8 px-11 ${NotoSans.className}`}>
           <div className="mb-4 text-5 font-300 text-white">{selected.name}</div>
-          <div className="flex gap-4 mb-4 text-white text-3 font-300">
+          <div className="flex gap-4 mb-4 text-3 font-300 text-white">
             <span>{selected.method}</span>
             <span>/{controllerData.basePath + selected.path}</span>
           </div>

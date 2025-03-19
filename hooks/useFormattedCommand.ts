@@ -1,14 +1,8 @@
 import { useEffect, useState } from "react";
+import { useExecuteCommand } from "@/contexts";
 
-interface Props {
-  startCommand: string;
-  bodyProps: Record<string, string> | undefined;
-  queryProps: Record<string, string> | undefined;
-  paramsProps: Record<string, string> | undefined;
-  headers: string;
-}
-
-export function useFormattedCommand({ startCommand, bodyProps, queryProps, paramsProps, headers }: Props) {
+export function useFormattedCommand() {
+  const { startCommand, bodyProps, queryProps, paramsProps, headers } = useExecuteCommand();
   const [formattedBodies, setFormattedBodies] = useState("");
   const [formattedQuerys, setFormattedQuerys] = useState("");
   const [formattedParams, setFormattedParams] = useState("");
