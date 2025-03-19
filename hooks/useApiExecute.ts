@@ -1,12 +1,12 @@
 import { useExecuteCommand } from "@/contexts";
 import { useFormattedCommand } from "@/hooks";
 import { POSTRequestDefault } from "@/lib/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function useApiExecute() {
   const { selected, projectData, controllerData, bodyProps } = useExecuteCommand();
   const { formattedParams, formattedQuerys } = useFormattedCommand();
-  const [responseData, setResponseData] = useState();
+  const [responseData, setResponseData] = useState<Record<string, any> | Record<string, any>[] | undefined>();
 
   const onClickExecute = async () => {
     if (!selected) return;
@@ -30,6 +30,12 @@ export function useApiExecute() {
 
     setResponseData(await response.json());
   };
+
+  useEffect(() => {
+    return () => {
+      setResponseData(undefined);
+    };
+  }, [selected]);
 
   return {
     responseData,
