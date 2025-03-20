@@ -4,7 +4,7 @@ import { POSTRequestDefault } from "@/lib/types";
 import { useEffect, useState } from "react";
 
 export function useApiExecute() {
-  const { selected, projectData, controllerData, bodyProps } = useExecuteCommand();
+  const { selected, bodyProps, getFormattedUrl } = useExecuteCommand();
   const { formattedParams, formattedQuerys } = useFormattedCommand();
   const [responseData, setResponseData] = useState<Record<string, any> | Record<string, any>[] | undefined>();
 
@@ -12,8 +12,7 @@ export function useApiExecute() {
     if (!selected) return;
 
     const defaultBody: POSTRequestDefault = {
-      serverUrl: projectData.serverUrl,
-      endpoint: "/" + controllerData.basePath,
+      serverUrl: getFormattedUrl(selected),
       method: selected.method,
       params: formattedParams,
       query: formattedQuerys,

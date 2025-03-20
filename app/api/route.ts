@@ -6,10 +6,10 @@ interface NextCustomRequest extends NextRequest {
 }
 
 export async function POST(req: NextCustomRequest) {
-  const { serverUrl, endpoint, method, query, params, body } = await req.json();
+  const { serverUrl, method, query, params, body } = await req.json();
 
   try {
-    const response = await fetch(serverUrl + endpoint + params + query, {
+    const response = await fetch(serverUrl + params + query, {
       method,
       headers: {
         "Content-type": "application/json",
