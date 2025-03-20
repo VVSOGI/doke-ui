@@ -2,7 +2,9 @@
   "controllerName": "Category",
   "basePath": "category",
   "description": "Category management API endpoints",
-  "tags": ["Category"],
+  "tags": [
+    "Category"
+  ],
   "endpoints": [
     {
       "path": "",
@@ -23,6 +25,12 @@
           "properties": {
             "Content-Type": {
               "default": "application/json"
+            },
+            "Authorization": {
+              "default": "",
+              "credentials": {
+                "type": "Bearer"
+              }
             }
           }
         }
@@ -153,6 +161,16 @@
               "type": "string",
               "description": "Target category id that you want delete",
               "required": true
+            }
+          }
+        },
+        "headers": {
+          "properties": {
+            "Authorization": {
+              "default": "",
+              "credentials": {
+                "type": "Bearer"
+              }
             }
           }
         }
