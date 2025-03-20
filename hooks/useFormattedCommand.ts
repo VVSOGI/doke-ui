@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useExecuteCommand } from "@/contexts";
 
 export function useFormattedCommand() {
-  const { startCommand, bodyProps, queryProps, paramsProps, headers } = useExecuteCommand();
+  const { selected, startCommand, bodyProps, queryProps, paramsProps, headers } = useExecuteCommand();
   const [formattedBodies, setFormattedBodies] = useState("");
   const [formattedQuerys, setFormattedQuerys] = useState("");
   const [formattedParams, setFormattedParams] = useState("");
@@ -13,7 +13,7 @@ export function useFormattedCommand() {
       setFormattedQuerys("");
       setFormattedParams("");
     };
-  }, [startCommand, headers, bodyProps, queryProps, paramsProps]);
+  }, [selected]);
 
   useEffect(() => {
     if (!bodyProps) return;
