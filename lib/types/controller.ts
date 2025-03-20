@@ -23,6 +23,13 @@ export interface DefaultProperty {
   required: boolean;
 }
 
+export interface HeaderProperty {
+  default?: string;
+  credentials: {
+    type: "Bearer" | "Basic";
+  };
+}
+
 export interface Body {
   properties: Record<string, DefaultProperty>;
 }
@@ -35,6 +42,10 @@ export interface Query {
   properties: Record<string, DefaultProperty>;
 }
 
+export interface Header {
+  properties: Record<string, HeaderProperty>;
+}
+
 type PropertyValueType = string | number | boolean;
 
 type ResponseExample = Record<string, PropertyValueType> | Record<string, PropertyValueType>[];
@@ -43,6 +54,7 @@ export interface ApiRequest {
   body?: Body;
   query?: Query;
   params?: Params;
+  headers?: Header;
 }
 
 export interface ApiResponse {
