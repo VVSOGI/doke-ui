@@ -2,7 +2,12 @@
 
 import React, { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { Controller, Endpoint, Project } from "@/lib/types";
-import { processQueryParameters, processRequestBody, processUrlParameters } from "@/lib/utils/generateCurlCommand";
+import {
+  processHeaders,
+  processQueryParameters,
+  processRequestBody,
+  processUrlParameters,
+} from "@/lib/utils/generateCurlCommand";
 
 interface ExecuteCommandContextType {
   projectData: Project;
@@ -53,7 +58,7 @@ export function ExecuteCommandProvider({
   useEffect(() => {
     if (!selected) return;
     const url = getFormattedUrl(selected);
-    const { body, params, query } = selected.request;
+    const { body, params, query, headers } = selected.request;
     const { example } = selected.response;
 
     let processedUrl = url;
@@ -73,6 +78,10 @@ export function ExecuteCommandProvider({
       const requestBody = processRequestBody(body.properties, example);
       setBodyProps(requestBody);
       setHeaders((prev) => prev + `-H "Content-Type: application/json" \\\n`);
+    }
+
+    if (headers) {
+      const requestHeader = processHeaders(headers.properties);
     }
 
     setStartCurlCommand(startCommand);
