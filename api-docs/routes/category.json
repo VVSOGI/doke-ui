@@ -18,6 +18,13 @@
               "required": true
             }
           }
+        },
+        "headers": {
+          "properties": {
+            "Content-Type": {
+              "default": "application/json"
+            }
+          }
         }
       },
       "response": {
@@ -47,33 +54,36 @@
         }
       },
       "response": {
-        "example": [
-          {
-            "id": "16874008-8915-4d53-9239-3913f7ee2089",
-            "title": "Test title",
-            "createdAt": "2025-02-10T13:00:27.440Z",
-            "updatedAt": "2025-02-10T13:00:27.440Z",
-            "deleted": false
-          },
-          {
-            "id": "40874008-8915-4d53-9239-3913f7ee2089",
-            "title": "Test title",
-            "createdAt": "2025-02-10T13:00:27.440Z",
-            "updatedAt": "2025-02-10T13:00:27.440Z",
-            "deleted": false
-          },
-          {
-            "id": "98874008-8915-4d53-9239-3913f7ee2089",
-            "title": "Test title",
-            "createdAt": "2025-02-10T13:00:27.440Z",
-            "updatedAt": "2025-02-10T13:00:27.440Z",
-            "deleted": false
-          }
-        ]
+        "example": {
+          "data": [
+            {
+              "id": "16874008-8915-4d53-9239-3913f7ee2089",
+              "title": "Test title",
+              "createdAt": "2025-02-10T13:00:27.440Z",
+              "updatedAt": "2025-02-10T13:00:27.440Z",
+              "deleted": false
+            },
+            {
+              "id": "40874008-8915-4d53-9239-3913f7ee2089",
+              "title": "Test title",
+              "createdAt": "2025-02-10T13:00:27.440Z",
+              "updatedAt": "2025-02-10T13:00:27.440Z",
+              "deleted": false
+            },
+            {
+              "id": "98874008-8915-4d53-9239-3913f7ee2089",
+              "title": "Test title",
+              "createdAt": "2025-02-10T13:00:27.440Z",
+              "updatedAt": "2025-02-10T13:00:27.440Z",
+              "deleted": false
+            }
+          ],
+          "total": 3
+        }
       }
     },
     {
-      "path": "/:categoryId/post/:postId",
+      "path": "/:categoryId",
       "method": "GET",
       "name": "Get Category By Id",
       "description": "This endpoint retrieves detailed information about a specific category identified by its unique categoryId.\n  It returns the complete category object including its identifier, title, timestamps, and deletion status.\n  The endpoint will return information even for soft-deleted categories, allowing applications to check deletion status.\n  This endpoint is useful for viewing category details, verifying existence, or checking status before performing operations on the category.",
@@ -81,11 +91,6 @@
         "params": {
           "properties": {
             "categoryId": {
-              "type": "string",
-              "description": "Target category Id that you find",
-              "required": true
-            },
-            "postId": {
               "type": "string",
               "description": "Target category Id that you find",
               "required": true
@@ -115,6 +120,13 @@
               "type": "string",
               "description": "Target category id that you want update",
               "required": true
+            }
+          }
+        },
+        "headers": {
+          "properties": {
+            "Content-Type": {
+              "default": "application/json"
             }
           }
         }

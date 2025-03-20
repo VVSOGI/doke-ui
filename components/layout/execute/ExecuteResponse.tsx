@@ -16,7 +16,7 @@ function Component({ title, example }: Props) {
           theme={"chalk"}
           style={{ backgroundColor: "transparent" }}
           displayObjectSize={false}
-          enableClipboard={false}
+          enableClipboard={true}
           name={false}
           collapsed={3}
         />

@@ -2,7 +2,6 @@ export type HttpMethods = "POST" | "GET" | "HEAD" | "OPTIONS" | "PUT" | "DELETE"
 
 export interface POSTRequestDefault {
   serverUrl: string;
-  endpoint: string;
   method: HttpMethods;
   query: string;
   params: string;

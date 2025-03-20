@@ -25,6 +25,13 @@
               "required": true
             }
           }
+        },
+        "headers": {
+          "properties": {
+            "Content-Type": {
+              "default": "application/json"
+            }
+          }
         }
       },
       "response": {
@@ -228,6 +235,13 @@
               "required": false
             }
           }
+        },
+        "headers": {
+          "properties": {
+            "Content-Type": {
+              "default": "application/json"
+            }
+          }
         }
       },
       "response": {
@@ -259,6 +273,13 @@
               "type": "number",
               "description": "The order number of the todolist you want to update",
               "required": true
+            }
+          }
+        },
+        "headers": {
+          "properties": {
+            "Content-Type": {
+              "default": "application/json"
             }
           }
         }

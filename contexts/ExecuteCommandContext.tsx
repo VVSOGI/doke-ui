@@ -17,6 +17,7 @@ interface ExecuteCommandContextType {
   setBodyProps: React.Dispatch<React.SetStateAction<Record<string, string> | undefined>>;
   setParamsProps: React.Dispatch<React.SetStateAction<Record<string, string> | undefined>>;
   setQueryProps: React.Dispatch<React.SetStateAction<Record<string, string> | undefined>>;
+  getFormattedUrl: (selected: Endpoint) => string;
 }
 
 const ExecuteCommandContext = createContext<ExecuteCommandContextType | undefined>(undefined);
@@ -42,9 +43,16 @@ export function ExecuteCommandProvider({
   const [queryProps, setQueryProps] = useState<Record<string, string>>();
   const [paramsProps, setParamsProps] = useState<Record<string, string>>();
 
+  const getFormattedUrl = (selected: Endpoint) => {
+    return (
+      `${projectData.serverUrl}${controllerData.basePath ? "/" + controllerData.basePath : ""}` +
+      selected.path.split("/:")[0]
+    );
+  };
+
   useEffect(() => {
     if (!selected) return;
-    const url = `${projectData.serverUrl}${controllerData.basePath ? "/" + controllerData.basePath : ""}`;
+    const url = getFormattedUrl(selected);
     const { body, params, query } = selected.request;
     const { example } = selected.response;
 
@@ -90,6 +98,7 @@ export function ExecuteCommandProvider({
     setBodyProps,
     setParamsProps,
     setQueryProps,
+    getFormattedUrl,
   };
 
   return <ExecuteCommandContext.Provider value={value}>{children}</ExecuteCommandContext.Provider>;
