@@ -17,12 +17,10 @@ export function processRequestBody(bodyProps: Record<string, DefaultProperty>, e
   const choiced = Array.isArray(responseExample) ? responseExample[0] : responseExample;
 
   for (const propName in bodyProps) {
-    if (bodyProps[propName].required) {
-      if (choiced[propName] !== undefined) {
-        requestBody[propName] = choiced[propName];
-      } else {
-        requestBody[propName] = `${propName}`;
-      }
+    if (choiced[propName] !== undefined) {
+      requestBody[propName] = choiced[propName];
+    } else {
+      requestBody[propName] = `${propName}`;
     }
   }
 
