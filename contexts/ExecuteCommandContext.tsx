@@ -14,7 +14,7 @@ interface ExecuteCommandContextType {
   controllerData: Controller;
   selected: Endpoint | null;
   startCommand: string;
-  headers: string;
+  headers: Record<string, any> | undefined;
   bodyProps: Record<string, string> | undefined;
   queryProps: Record<string, string> | undefined;
   paramsProps: Record<string, string> | undefined;
@@ -43,7 +43,7 @@ export function ExecuteCommandProvider({
   setSelected,
 }: ExecuteCommandProviderProps) {
   const [startCommand, setStartCurlCommand] = useState("");
-  const [headers, setHeaders] = useState("");
+  const [headers, setHeaders] = useState<Record<string, any>>();
   const [bodyProps, setBodyProps] = useState<Record<string, string>>();
   const [queryProps, setQueryProps] = useState<Record<string, string>>();
   const [paramsProps, setParamsProps] = useState<Record<string, string>>();
@@ -60,9 +60,7 @@ export function ExecuteCommandProvider({
     const url = getFormattedUrl(selected);
     const { body, params, query, headers } = selected.request;
     const { example } = selected.response;
-
-    let processedUrl = url;
-    let startCommand = `curl -X ${selected.method} ${processedUrl}`;
+    const startCommand = `curl -X ${selected.method} ${url}`;
 
     if (params) {
       const requestParams = processUrlParameters(params.properties, example);
@@ -77,11 +75,16 @@ export function ExecuteCommandProvider({
     if (body) {
       const requestBody = processRequestBody(body.properties, example);
       setBodyProps(requestBody);
-      setHeaders((prev) => prev + `-H "Content-Type: application/json" \\\n`);
+      setHeaders((prev) => {
+        return { ...prev, "Content-Type": "application/json" };
+      });
     }
 
     if (headers) {
       const requestHeader = processHeaders(headers.properties);
+      setHeaders((prev) => {
+        return { ...prev, ...requestHeader };
+      });
     }
 
     setStartCurlCommand(startCommand);
@@ -90,7 +93,7 @@ export function ExecuteCommandProvider({
       setBodyProps(undefined);
       setParamsProps(undefined);
       setQueryProps(undefined);
-      setHeaders("");
+      setHeaders(undefined);
     };
   }, [selected]);
 

@@ -74,7 +74,6 @@ export function processHeaders(headersProps: Record<string, HeaderProperty>) {
         requestHeaders["credentials"].push(credential);
       }
     } else {
-      if (headersProps[headerKey].default === "application/json") continue;
       requestHeaders[headerKey] = headersProps[headerKey].default;
     }
   }
