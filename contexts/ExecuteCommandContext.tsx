@@ -19,6 +19,7 @@ interface ExecuteCommandContextType {
   queryProps: Record<string, string> | undefined;
   paramsProps: Record<string, string> | undefined;
   setSelected: (selected: Endpoint | null) => void;
+  setHeaders: React.Dispatch<React.SetStateAction<Record<string, any> | undefined>>;
   setBodyProps: React.Dispatch<React.SetStateAction<Record<string, string> | undefined>>;
   setParamsProps: React.Dispatch<React.SetStateAction<Record<string, string> | undefined>>;
   setQueryProps: React.Dispatch<React.SetStateAction<Record<string, string> | undefined>>;
@@ -106,6 +107,7 @@ export function ExecuteCommandProvider({
     bodyProps,
     queryProps,
     paramsProps,
+    setHeaders,
     setSelected,
     setBodyProps,
     setParamsProps,
