@@ -1,9 +1,11 @@
 import { CurlProperty } from "@/components";
 import { useExecuteCommand } from "@/contexts";
 import React, { memo } from "react";
+import { CurlHeaderProperty } from "./CurlHeaderProperty";
 
 function Component() {
-  const { bodyProps, paramsProps, queryProps, setBodyProps, setParamsProps, setQueryProps } = useExecuteCommand();
+  const { bodyProps, paramsProps, queryProps, headers, setBodyProps, setParamsProps, setQueryProps, setHeaders } =
+    useExecuteCommand();
 
   return (
     <div className="flex flex-col gap-8">
@@ -12,6 +14,9 @@ function Component() {
         <CurlProperty title="PARAMS PROPERTIES" properties={paramsProps} setProperties={setParamsProps} />
       )}
       {queryProps && <CurlProperty title="QUERY PROPERTIES" properties={queryProps} setProperties={setQueryProps} />}
+      {headers && headers.credentials && (
+        <CurlHeaderProperty title="HEADER PROPERTIES" properties={headers} setProperties={setHeaders} />
+      )}
     </div>
   );
 }
