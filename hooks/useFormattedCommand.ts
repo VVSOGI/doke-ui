@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
 import { useExecuteCommand } from "@/contexts";
+import { HeaderCredential } from "@/lib/types";
 
 export function useFormattedCommand() {
   const { selected, startCommand, bodyProps, queryProps, paramsProps, headers } = useExecuteCommand();
+  const [command, setCommand] = useState("");
   const [formattedBodies, setFormattedBodies] = useState("");
   const [formattedQuerys, setFormattedQuerys] = useState("");
   const [formattedParams, setFormattedParams] = useState("");
+  const [formattedHeaders, setFormattedHeaders] = useState("");
 
   useEffect(() => {
     return () => {
       setFormattedBodies("");
       setFormattedQuerys("");
       setFormattedParams("");
+      setFormattedHeaders("");
     };
   }, [selected]);
 
@@ -44,13 +48,44 @@ export function useFormattedCommand() {
     setFormattedQuerys(commands.join(""));
   }, [queryProps]);
 
-  return {
-    command:
+  useEffect(() => {
+    if (!headers) return;
+    const commands: string[] = [];
+
+    Object.entries(headers).forEach(([key, value]) => {
+      if (key === "credentials") {
+        const credentials = (value as HeaderCredential[]).map((credential) => {
+          return `-H "${credential.key}: ${credential.type} ${credential.value}" \\\n`;
+        });
+        return commands.push(...credentials);
+      }
+
+      commands.push(`-H "${key}: ${value}" \\\n`);
+    });
+
+    setFormattedHeaders(" \\\n" + commands.join(""));
+  }, [headers]);
+
+  useEffect(() => {
+    if (!selected) return;
+
+    const totalCommand =
       startCommand +
       formattedParams +
       formattedQuerys +
-      (headers && ` \\\n${headers}`) +
-      (formattedBodies && `-d '${formattedBodies}'`),
+      formattedHeaders +
+      (formattedBodies && `-d '${formattedBodies}'`);
+
+    if (!totalCommand.endsWith("\\\n")) {
+      setCommand(totalCommand);
+      return;
+    }
+
+    setCommand(totalCommand.slice(0, totalCommand.length - 2));
+  }, [selected, formattedBodies, formattedParams, formattedQuerys, formattedHeaders]);
+
+  return {
+    command,
     formattedQuerys,
     formattedParams,
   };
