@@ -2,9 +2,7 @@
   "controllerName": "Category",
   "basePath": "category",
   "description": "Category management API endpoints",
-  "tags": [
-    "Category"
-  ],
+  "tags": ["Category"],
   "endpoints": [
     {
       "path": "",
@@ -128,6 +126,15 @@
               "type": "string",
               "description": "Target category id that you want update",
               "required": true
+            }
+          }
+        },
+        "body": {
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Write title of category that you want update",
+              "required": false
             }
           }
         },

@@ -1,11 +1,11 @@
-import React, { ButtonHTMLAttributes } from "react";
+import React, { ButtonHTMLAttributes, memo } from "react";
 import { NotoSans } from "@/lib/assets";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
 }
 
-export function ApiExecuteButton({ className, ...props }: Props) {
+function Component({ className, ...props }: Props) {
   return (
     <button
       className={`
@@ -21,3 +21,5 @@ export function ApiExecuteButton({ className, ...props }: Props) {
     </button>
   );
 }
+
+export const ApiExecuteButton = memo(Component);

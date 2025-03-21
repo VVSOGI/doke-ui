@@ -6,16 +6,15 @@ interface NextCustomRequest extends NextRequest {
 }
 
 export async function POST(req: NextCustomRequest) {
-  const { serverUrl, method, query, params, body } = await req.json();
+  const { serverUrl, method, headers, query, params, body } = await req.json();
 
   try {
     const response = await fetch(serverUrl + params + query, {
       method,
-      headers: {
-        "Content-type": "application/json",
-      },
+      headers,
       body: JSON.stringify(body),
     });
+
     const data = await response.json();
 
     return NextResponse.json(data, { status: response.status });
