@@ -1,7 +1,6 @@
-import { CurlProperty } from "@/components";
-import { useExecuteCommand } from "@/contexts";
 import React, { memo } from "react";
-import { CurlHeaderProperty } from "./CurlHeaderProperty";
+import { CurlHeaderProperty, CurlProperty } from "@/components";
+import { useExecuteCommand } from "@/contexts";
 
 function Component() {
   const { bodyProps, paramsProps, queryProps, headers, setBodyProps, setParamsProps, setQueryProps, setHeaders } =
