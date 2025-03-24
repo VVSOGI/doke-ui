@@ -1,4 +1,4 @@
+export * from "./ControllerEndpointTitle";
 export * from "./ControllerPanel";
-export * from "./Properties";
-export * from "./EndpointTitle";
-export * from "./ResponseExample";
+export * from "./ControllerProperties";
+export * from "./ControllerResponseExample";
