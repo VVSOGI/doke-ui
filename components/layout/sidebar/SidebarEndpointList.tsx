@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useActiveSection, useEndpointData } from "@/contexts";
 import { EndpointButton, ControllerButton } from "@/components";
 
-export function EndpointList() {
+export function SidebarEndpointList() {
   const { endpointData } = useEndpointData();
   const { activeSection, changeSection } = useActiveSection();
   const [activeController, setActiveController] = useState([...endpointData.map((_, index) => index)]);

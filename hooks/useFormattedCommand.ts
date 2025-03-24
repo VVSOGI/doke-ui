@@ -55,7 +55,9 @@ export function useFormattedCommand() {
     Object.entries(headers).forEach(([key, value]) => {
       if (key === "credentials") {
         const credentials = (value as HeaderCredential[]).map((credential) => {
-          return `-H "${credential.key}: ${credential.type} ${credential.value}" \\\n`;
+          return `-H "${credential.key}: ${credential.type === "custom" ? "" : credential.type + " "}${
+            credential.value
+          }" \\\n`;
         });
         return commands.push(...credentials);
       }

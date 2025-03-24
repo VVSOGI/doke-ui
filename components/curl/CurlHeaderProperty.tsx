@@ -1,5 +1,5 @@
-import { HeaderCredential } from "@/lib/types";
 import React, { memo } from "react";
+import { HeaderCredential } from "@/lib/types";
 
 interface Props {
   title: string;
@@ -16,7 +16,9 @@ function Component({ title, properties, setProperties }: Props) {
           {properties.credentials.map((credential: HeaderCredential, index: number) => {
             return (
               <div key={credential.key + credential.type} className="flex flex-col gap-2">
-                <div className="text-2 font-300 text-white">{credential.type}</div>
+                <div className="text-2 font-300 text-white">
+                  {credential.type === "custom" ? credential.key : credential.type}
+                </div>
                 <input
                   value={credential.value}
                   onChange={(e) => {

@@ -30,4 +30,4 @@ function Component({ title, properties }: Props) {
   );
 }
 
-export const Properties = memo(Component);
+export const ControllerProperties = memo(Component);

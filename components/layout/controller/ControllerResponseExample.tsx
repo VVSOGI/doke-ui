@@ -19,4 +19,4 @@ function Component({ endpoint }: Props) {
   );
 }
 
-export const ResponseExample = memo(Component);
+export const ControllerResponseExample = memo(Component);
