@@ -1,4 +1,4 @@
 export * from "./ApiExecuteButton";
 export * from "./ControllerButton";
 export * from "./EndpointButton";
-export * from "./ExecutePanelButton";
+export * from "./ExecutePanelOpenButton";

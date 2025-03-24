@@ -6,7 +6,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
 }
 
-export function ExecutePanelButton({ className, ...props }: Props) {
+export function ExecutePanelOpenButton({ className, ...props }: Props) {
   return (
     <button
       className={`
