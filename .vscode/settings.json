@@ -1,4 +1,16 @@
 {
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "draw.folder.structure.exclude": ["node_modules", "**/*/node_modules", ".git", ".next", "**/*.bin"]
+  "typescript.tsdk": ".yarn/sdks/typescript/lib",
+  "draw.folder.structure.exclude": [
+    "node_modules",
+    "**/*/node_modules",
+    ".git",
+    ".next",
+    "**/*.bin"
+  ],
+  "search.exclude": {
+    "**/.yarn": true,
+    "**/.pnp.*": true
+  },
+  "eslint.nodePath": ".yarn/sdks",
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }
