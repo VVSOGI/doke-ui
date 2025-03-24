@@ -7,7 +7,7 @@ import {
   processQueryParameters,
   processRequestBody,
   processUrlParameters,
-} from "@/lib/utils/generateCurlCommand";
+} from "@/lib/utils/processRequestJSON";
 
 interface ExecuteCommandContextType {
   projectData: Project;

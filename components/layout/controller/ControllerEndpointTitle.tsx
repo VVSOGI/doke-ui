@@ -2,10 +2,10 @@
 
 import React, { memo, useRef } from "react";
 import { isEqual } from "es-toolkit";
+import { useIntersectionObserver } from "@/hooks";
+import { ExecutePanelOpenButton } from "@/components";
 import { NotoSans } from "@/lib/assets";
 import { Endpoint } from "@/lib/types";
-import { ExecutePanelButton } from "@/components";
-import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 
 interface Props {
   endpoint: Endpoint;
@@ -39,7 +39,7 @@ function Component({ endpoint, isScrolling, setSelected }: Props) {
       </div>
       <div className="w-full flex justify-between items-center pr-10">
         <div>{endpoint.name}</div>
-        <ExecutePanelButton
+        <ExecutePanelOpenButton
           onClick={() =>
             setSelected((prev) => {
               if (prev && isEqual(endpoint, prev)) {
