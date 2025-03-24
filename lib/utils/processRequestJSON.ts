@@ -63,7 +63,7 @@ export function processHeaders(headersProps: Record<string, HeaderProperty>) {
       const credential = {
         key: headerKey,
         type: headersProps[headerKey].credentials?.type,
-        value: "",
+        value: headersProps[headerKey].default,
       };
 
       if (!requestHeaders["credentials"]) {
