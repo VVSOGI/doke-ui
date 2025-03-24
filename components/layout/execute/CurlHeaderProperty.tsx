@@ -25,9 +25,9 @@ function Component({ title, properties, setProperties }: Props) {
                     setProperties(newProps);
                   }}
                   className={`
-                        w-full py-4 px-8 rounded-sm outline-none border-none bg-gray-600 text-1 font-300 text-white
-                        placeholder:text-gray-200
-                      `}
+                    w-full py-4 px-8 rounded-sm outline-none border-none bg-gray-600 text-1 font-300 text-white
+                    placeholder:text-gray-200
+                  `}
                   placeholder={"Please enter a valid value."}
                   type="text"
                 />
