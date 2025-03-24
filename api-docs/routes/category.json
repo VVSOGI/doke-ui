@@ -2,7 +2,9 @@
   "controllerName": "Category",
   "basePath": "category",
   "description": "Category management API endpoints",
-  "tags": ["Category"],
+  "tags": [
+    "Category"
+  ],
   "endpoints": [
     {
       "path": "",
@@ -177,6 +179,12 @@
               "default": "",
               "credentials": {
                 "type": "Bearer"
+              }
+            },
+            "X-API-KEY": {
+              "default": "X-API-KEY",
+              "credentials": {
+                "type": "custom"
               }
             }
           }
