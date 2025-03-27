@@ -180,12 +180,6 @@
               "credentials": {
                 "type": "Bearer"
               }
-            },
-            "X-API-KEY": {
-              "default": "X-API-KEY",
-              "credentials": {
-                "type": "custom"
-              }
             }
           }
         }
